@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://d30y6jmivuowm"]
+
+[ext_resource type="PackedScene" uid="uid://d00f7m0ka7nxn" path="res://scenes/stars_background.tscn" id="1_506s5"]
+[ext_resource type="PackedScene" uid="uid://c5vwudqbni41t" path="res://scenes/options_menu.tscn" id="1_08038"]
+[ext_resource type="Script" uid="uid://b7bq7ichuc1wt" path="res://scenes/UI/options_independent.gd" id="1_t3yhk"]
+
+[node name="OptionsIndependent" type="Control" unique_id=1528188095]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_t3yhk")
+
+[node name="StarsBackground" parent="." unique_id=1072841081 instance=ExtResource("1_506s5")]
+layout_mode = 1
+
+[node name="OptionsMenu" parent="." unique_id=505231594 instance=ExtResource("1_08038")]
+layout_mode = 1
+
+[connection signal="returnButtonPressed" from="OptionsMenu" to="." method="_on_options_menu_return_button_pressed"]
