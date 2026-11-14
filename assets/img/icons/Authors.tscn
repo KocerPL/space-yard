@@ -1,0 +1,33 @@
+[gd_scene format=3 uid="uid://dr2a1a0vmv5br"]
+
+[ext_resource type="PackedScene" uid="uid://d00f7m0ka7nxn" path="res://scenes/stars_background.tscn" id="1_800v2"]
+[ext_resource type="Script" uid="uid://4jg3jc0d1g4" path="res://scripts/credits.gd" id="2_7imkv"]
+
+[node name="Authors" type="Control" unique_id=666218491]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StarsBackground" parent="." unique_id=1072841081 instance=ExtResource("1_800v2")]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="Credits" type="Control" parent="." unique_id=473927418]
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("2_7imkv")
+scroll_speed = 80.0
+loop_crawl = true
+credits_text = "Autorzy:
+Eryk Kopciuch - Lider
+Dawid Szczędor
+Patryk Przybyło
+Zuzanna Makowiecka
+Sylwester Półtorak
+Kacper Saletnik
+"

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://d00f7m0ka7nxn"]
+
+[ext_resource type="Script" uid="uid://w5q8qoprfe8g" path="res://scripts/stars.gd" id="1_l4d2i"]
+
+[node name="StarsBackground" type="Control" unique_id=1072841081]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Background" type="ColorRect" parent="." unique_id=779943749]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.012617188, 0.012617188, 0.012617188, 1)
+
+[node name="Stars" type="Control" parent="." unique_id=1125289184]
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("1_l4d2i")
