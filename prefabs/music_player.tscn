@@ -27,10 +27,10 @@ func set_target_volume(value):
 	target_volume = value
 
 func stop():
-	main_track_player.stream_paused = true
+	main_track_player.stop()
 
 func start():
-	main_track_player.stream_paused = false
+	main_track_player.play()
 
 
 func play_tense_track():
@@ -38,8 +38,8 @@ func play_tense_track():
 	main_track_player.stop()
 	tense_track_player.play()
 
-func _on_tense_track_finished():
-	main_track_player.play()
+#func _on_tense_track_finished():
+	#main_track_player.play()
 "
 
 [node name="MusicPlayer" type="Node" unique_id=942982293]
