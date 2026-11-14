@@ -189,11 +189,13 @@ visibility_aabb = AABB(-10, -5, -10, 40, 16, 40)
 process_material = SubResource("ParticleProcessMaterial_qviwv")
 draw_pass_1 = SubResource("QuadMesh_x35my")
 
-[node name="Mission" type="Node" parent="." unique_id=425669336 node_paths=PackedStringArray("rover", "dialog", "end_fade")]
+[node name="Mission" type="Node" parent="." unique_id=425669336 node_paths=PackedStringArray("rover", "dialog", "prompt", "analyzing", "end_fade")]
 script = ExtResource("8_mission")
 rover = NodePath("../Rover")
 dialog = NodePath("../HUD/DialogBox")
 end_scene = "res://scenes/mainmenu.tscn"
+prompt = NodePath("../HUD/Telemetry/PanelContainer/MarginContainer/VBoxContainer/InteractionsLabels/CollectSampleLabel")
+analyzing = NodePath("../HUD/Telemetry/PanelContainer/MarginContainer/VBoxContainer/InteractionsLabels/AnalyzingLabel")
 end_fade = NodePath("../HUD/FadeOut")
 
 [node name="Intro" type="Node" parent="Mission" unique_id=704131812]
@@ -220,11 +222,13 @@ transmission = "Transmission 02"
 voice = ExtResource("a_trans_2")
 delay = 12.0
 
-[node name="Transmission03" type="Node" parent="Mission" unique_id=1020926475 node_paths=PackedStringArray("poi")]
+[node name="Transmission03" type="Node" parent="Mission" unique_id=1020926475 node_paths=PackedStringArray("poi", "sample")]
 script = ExtResource("9_event")
 transmission = "Transmission 03"
 voice = ExtResource("a_trans_3")
 poi = NodePath("../../RockPoi")
+analyze = true
+sample = NodePath("../../HUD/Telemetry/PanelContainer/MarginContainer/VBoxContainer/FoundSamples/BlueberriesLabel")
 
 [node name="Transmission04" type="Node" parent="Mission" unique_id=745135847]
 script = ExtResource("9_event")
@@ -232,11 +236,13 @@ transmission = "Transmission 04"
 voice = ExtResource("a_trans_4")
 delay = 10.0
 
-[node name="Transmission05" type="Node" parent="Mission" unique_id=1100681950 node_paths=PackedStringArray("poi")]
+[node name="Transmission05" type="Node" parent="Mission" unique_id=1100681950 node_paths=PackedStringArray("poi", "sample")]
 script = ExtResource("9_event")
 transmission = "Transmission 05"
 voice = ExtResource("a_trans_5")
 poi = NodePath("../../CraterPoi")
+analyze = true
+sample = NodePath("../../HUD/Telemetry/PanelContainer/MarginContainer/VBoxContainer/FoundSamples/CraterSoilLabel")
 
 [node name="MissionCompleted" type="Node" parent="Mission" unique_id=1588203471]
 script = ExtResource("9_event")

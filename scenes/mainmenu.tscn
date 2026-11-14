@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://1enog7mrr0y" path="res://assets/img/icons/rocket.svg" id="5_85riq"]
 [ext_resource type="Texture2D" uid="uid://bltrao8f3m6oq" path="res://assets/img/icons/github.svg" id="5_dfy5j"]
 [ext_resource type="Texture2D" uid="uid://cekneyrap2fkv" path="res://assets/img/icons/user-group.svg" id="5_s5g8n"]
+[ext_resource type="Texture2D" uid="uid://bhnffvnqgessb" path="res://assets/img/icons/settings.svg" id="7_uui5l"]
 [ext_resource type="Texture2D" uid="uid://5i1h3pmvtqsv" path="res://assets/img/icons/exit.svg" id="7_wf3n4"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_4h3mk"]
@@ -58,11 +59,20 @@ label_settings = SubResource("LabelSettings_4h3mk")
 [node name="PlayButton" parent="." unique_id=1729503349 instance=ExtResource("2_natt5")]
 layout_mode = 0
 offset_left = 59.0
-offset_top = 245.0
+offset_top = 160.0
 offset_right = 224.0
-offset_bottom = 296.0
+offset_bottom = 217.0
 text = "Play"
 icon = ExtResource("5_85riq")
+
+[node name="OptionsButton" parent="." unique_id=1146277377 instance=ExtResource("2_natt5")]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 240.0
+offset_right = 240.0
+offset_bottom = 297.0
+text = "Options"
+icon = ExtResource("7_uui5l")
 
 [node name="GithubButton" parent="." unique_id=1117403786 instance=ExtResource("2_natt5")]
 layout_mode = 0
@@ -86,11 +96,10 @@ icon = ExtResource("7_wf3n4")
 layout_mode = 0
 offset_left = 56.0
 offset_top = 400.0
-offset_right = 395.0
+offset_right = 408.0
 offset_bottom = 457.0
 text = "Nasa Space Apps"
 icon = ExtResource("5_7yvfd")
-expand_icon = false
 
 [node name="TeamMemersButton" parent="." unique_id=228888766 instance=ExtResource("2_natt5")]
 layout_mode = 0
@@ -114,6 +123,7 @@ mouse_filter = 0
 color = Color(0, 0, 0, 1)
 
 [connection signal="pressed" from="PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="GithubButton" to="." method="_on_github_button_pressed"]
 [connection signal="pressed" from="ExitButton" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="NasaSpaceAppsButton" to="." method="_on_nasa_space_apps_button_pressed"]

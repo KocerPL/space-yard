@@ -89,6 +89,12 @@ layout_mode = 2
 text = "Press [E] to collect sample"
 label_settings = SubResource("LabelSettings_f6xyr")
 
+[node name="AnalyzingLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InteractionsLabels" unique_id=1873620451]
+visible = false
+layout_mode = 2
+text = "Analyzing sample..."
+label_settings = SubResource("LabelSettings_f6xyr")
+
 [node name="EscapeLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InteractionsLabels" unique_id=1459992554]
 layout_mode = 2
 text = "Press [ESC] to menu"

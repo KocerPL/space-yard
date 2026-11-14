@@ -44,6 +44,7 @@ func begin() -> void:
 func _on_event_started(event: MissionEvent) -> void:
 	if event.transmission == trigger_transmission:
 		begin()
+		MusicPlayer.play_tense_track()
 
 func _process(_delta: float) -> void:
 	if _dust_follow and _rover:
