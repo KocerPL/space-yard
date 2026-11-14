@@ -52,6 +52,18 @@ static var instance: TerrainGenerator
 @export var detail_amplitude := 0.35
 @export var detail_size := 4.0
 
+@export_group("Rocks")
+## Rocks scattered per chunk, deterministic per seed. Most are pebbles; few are boulders.
+@export var rocks_per_chunk := 30
+## Smallest and largest rock size (m).
+@export var rock_size := Vector2(0.08, 1.8)
+## Higher = more small rocks, fewer boulders (size = lerp(min, max, rand^bias)).
+@export var rock_size_bias := 4.0
+## Rocks at least this big (m) get a collider; smaller ones are visual only.
+@export var rock_collision_size := 0.5
+## Defaults to a matte basalt material tinted per rock.
+@export var rock_material: Material
+
 @export_group("Colors")
 ## Color by height, sampled at 0..1 across color_height_range: dark basaltic sand in the lows,
 ## rust plains, pale dust on the highs. Blends smoothly between stops.
@@ -69,6 +81,8 @@ var _trackers: Array[Node3D] = []
 var _noise := FastNoiseLite.new()
 var _color_noise := FastNoiseLite.new()
 var _detail_noise := FastNoiseLite.new()
+var _rock_mesh: ArrayMesh
+var _rock_points: PackedVector3Array # rock mesh vertices, for convex colliders
 var _active_seed := 0
 var _update_timer := 0.0
 
@@ -96,6 +110,14 @@ func _ready() -> void:
 		m.vertex_color_is_srgb = true # colors below are picked in sRGB
 		m.roughness = 1.0
 		terrain_material = m
+	if rock_material == null:
+		var rm := StandardMaterial3D.new()
+		rm.albedo_color = Color(0.36, 0.22, 0.15)
+		rm.vertex_color_use_as_albedo = true # per-instance tint
+		rm.vertex_color_is_srgb = true
+		rm.roughness = 1.0
+		rock_material = rm
+	_build_rock_mesh()
 	_init_seed()
 	_refresh_chunks(true) # synchronous initial load so ground exists before anything spawns on it
 
@@ -228,9 +250,73 @@ func _load_chunk(coord: Vector2i) -> void:
 	var shape := CollisionShape3D.new()
 	shape.shape = mesh.create_trimesh_shape() # wheel/foot raycasts need a collider to hit
 	body.add_child(shape)
+	_scatter_rocks(body, coord)
 
 	add_child(body)
 	_chunks[coord] = body
+
+
+## One lumpy, flat-shaded rock: a low-poly sphere pushed in/out by 3D noise. Variety comes from per-instance
+## rotation, non-uniform scale and tint.
+## ponytail: one base shape for every rock; build a few variants (different noise seeds) if repetition shows.
+func _build_rock_mesh() -> void:
+	var sphere := SphereMesh.new()
+	sphere.radius = 0.5
+	sphere.height = 1.0
+	sphere.radial_segments = 9
+	sphere.rings = 6
+	var arrays := sphere.get_mesh_arrays()
+	var lumps := FastNoiseLite.new()
+	lumps.frequency = 2.0
+	_rock_points = PackedVector3Array()
+	for p: Vector3 in arrays[Mesh.ARRAY_VERTEX]:
+		_rock_points.append(p * (1.0 + lumps.get_noise_3dv(p) * 0.6)) # by position, so seam duplicates stay joined
+	var st := SurfaceTool.new()
+	st.begin(Mesh.PRIMITIVE_TRIANGLES)
+	st.set_smooth_group(-1) # flat faces read as chipped rock
+	for i: int in arrays[Mesh.ARRAY_INDEX]:
+		st.add_vertex(_rock_points[i])
+	st.generate_normals()
+	_rock_mesh = st.commit()
+
+
+func _scatter_rocks(body: StaticBody3D, coord: Vector2i) -> void:
+	if rocks_per_chunk <= 0:
+		return
+	var mm := MultiMesh.new()
+	mm.transform_format = MultiMesh.TRANSFORM_3D
+	mm.use_colors = true
+	mm.mesh = _rock_mesh
+	mm.instance_count = rocks_per_chunk
+	for i in rocks_per_chunk:
+		var lx := _rock_rand(coord, i, 0) * chunk_size
+		var lz := _rock_rand(coord, i, 1) * chunk_size
+		var size := lerpf(rock_size.x, rock_size.y, pow(_rock_rand(coord, i, 2), rock_size_bias))
+		var scl := size * Vector3(lerpf(0.7, 1.3, _rock_rand(coord, i, 3)), lerpf(0.45, 0.9, _rock_rand(coord, i, 4)),
+			lerpf(0.7, 1.3, _rock_rand(coord, i, 5)))
+		var rot := Basis.from_euler(Vector3(lerpf(-0.3, 0.3, _rock_rand(coord, i, 6)), _rock_rand(coord, i, 7) * TAU, 0.0))
+		var basis := rot * Basis.from_scale(scl)
+		var ground := sample_height(coord.x * chunk_size + lx, coord.y * chunk_size + lz)
+		var origin := Vector3(lx, ground + scl.y * 0.2, lz) # ~30% buried, so they sit in the dust
+		mm.set_instance_transform(i, Transform3D(basis, origin))
+		var tint := lerpf(0.7, 1.15, _rock_rand(coord, i, 8))
+		mm.set_instance_color(i, Color(tint, tint, tint))
+		if size >= rock_collision_size:
+			var convex := ConvexPolygonShape3D.new()
+			convex.points = Transform3D(basis, Vector3.ZERO) * _rock_points # baked: colliders can't take non-uniform scale
+			var cs := CollisionShape3D.new()
+			cs.shape = convex
+			cs.position = origin
+			body.add_child(cs)
+	var mmi := MultiMeshInstance3D.new()
+	mmi.name = "Rocks"
+	mmi.multimesh = mm
+	mmi.material_override = rock_material
+	body.add_child(mmi)
+
+
+func _rock_rand(coord: Vector2i, i: int, k: int) -> float:
+	return _hash01(coord.x, coord.y, 100 + i * 10 + k)
 
 
 ## Smooth-shaded grid mesh with per-vertex colors (shared vertices, so colors and normals blend across quads).
