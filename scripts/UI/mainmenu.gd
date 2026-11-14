@@ -1,5 +1,10 @@
 extends Control
 
+func _ready():
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	
+	MusicPlayer.start()
+
 func _on_team_memers_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://assets/img/icons/Authors.tscn")
 
