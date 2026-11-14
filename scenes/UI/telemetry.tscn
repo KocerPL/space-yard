@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://cq83q7xpp664l"]
+
+[ext_resource type="FontFile" uid="uid://mdbuffarwjlg" path="res://assets/fonts/lmmono8-regular.otf" id="1_idoxa"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_f6xyr"]
+font = ExtResource("1_idoxa")
+font_color = Color(0.42050004, 1, 0.39, 1)
+
+[node name="Telemetry" type="Control" unique_id=731554939]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1144.0
+offset_bottom = 648.0
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1702446563]
+propagate_maximum_size = true
+layout_mode = 0
+offset_right = 176.0
+offset_bottom = 208.0
+color = Color(0, 0, 0, 0.5647059)
+
+[node name="Label" type="Label" parent="ColorRect" unique_id=2058127200]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 161.0
+offset_bottom = 136.0
+text = "Baterry: 100%
+TX: 0
+RX: 0
+Found samples:
+Big rock
+Martian life
+IDK"
+label_settings = SubResource("LabelSettings_f6xyr")
