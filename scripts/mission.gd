@@ -5,7 +5,7 @@ extends Node
 ## A transmission shows its lines in the dialog box, paced to its voice clip.
 
 signal event_started(event: MissionEvent)
-
+signal reading_message
 @export var rover: Rover
 ## A scenes/UI/dialog_box.tscn whose text_file holds the transmissions.
 @export var dialog: Node
@@ -75,7 +75,9 @@ func _play(e: MissionEvent) -> void:
 		await get_tree().create_timer(length).timeout
 	else:
 		dialog.start_dialog(e.transmission)
+		
 		for line: String in lines: # each line stays up for its share of the clip; the last next_line closes the box
+			reading_message.emit();
 			await get_tree().create_timer(length * line.length() / maxi(chars, 1)).timeout
 			dialog.next_line()
 	_busy = false

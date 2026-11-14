@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cq83q7xpp664l"]
 
 [ext_resource type="FontFile" uid="uid://mdbuffarwjlg" path="res://assets/fonts/lmmono8-regular.otf" id="1_idoxa"]
+[ext_resource type="Script" uid="uid://bgbarfe7ufqic" path="res://scripts/UI/telemetry.gd" id="1_sw7ux"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_f6xyr"]
 font = ExtResource("1_idoxa")
@@ -11,25 +12,82 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 1144.0
 offset_bottom = 648.0
+script = ExtResource("1_sw7ux")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=1702446563]
-propagate_maximum_size = true
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=525078289]
+custom_maximum_size = Vector2(1000, 1000)
 layout_mode = 0
-offset_right = 176.0
-offset_bottom = 208.0
-color = Color(0, 0, 0, 0.5647059)
+offset_right = 172.0
+offset_bottom = 167.0
 
-[node name="Label" type="Label" parent="ColorRect" unique_id=2058127200]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 161.0
-offset_bottom = 136.0
-text = "Baterry: 100%
-TX: 0
-RX: 0
-Found samples:
-Big rock
-Martian life
-IDK"
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=645557947]
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1131273232]
+custom_maximum_size = Vector2(1000, 1000)
+layout_mode = 2
+
+[node name="BatteryLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=346857474]
+layout_mode = 2
+text = "Battery: 100%"
+label_settings = SubResource("LabelSettings_f6xyr")
+
+[node name="SolarPowerLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=860879962]
+layout_mode = 2
+text = "Solar power: 100W"
+label_settings = SubResource("LabelSettings_f6xyr")
+
+[node name="HSeparator2" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=822812664]
+layout_mode = 2
+
+[node name="NetSpeedLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=2058127200]
+layout_mode = 2
+text = "TX: 0 kB/s
+RX: 0 kB/s"
+label_settings = SubResource("LabelSettings_f6xyr")
+
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1638519556]
+layout_mode = 2
+
+[node name="FoundSamplesLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=693671516]
+layout_mode = 2
+text = "Found samples:"
+label_settings = SubResource("LabelSettings_f6xyr")
+
+[node name="FoundSamples" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1011168607]
+layout_mode = 2
+
+[node name="BlueberriesLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/FoundSamples" unique_id=313963310]
+layout_mode = 2
+text = "   \"Blueberries\""
+label_settings = SubResource("LabelSettings_f6xyr")
+
+[node name="MartianRockLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/FoundSamples" unique_id=1652450722]
+layout_mode = 2
+text = "   Martian rock"
+label_settings = SubResource("LabelSettings_f6xyr")
+
+[node name="CraterSoilLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/FoundSamples" unique_id=1914255375]
+layout_mode = 2
+text = "   Crater soil sample"
+label_settings = SubResource("LabelSettings_f6xyr")
+
+[node name="HSeparator3" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=2003436101]
+layout_mode = 2
+
+[node name="InteractionsLabels" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=338422783]
+layout_mode = 2
+
+[node name="CollectSampleLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InteractionsLabels" unique_id=980223411]
+layout_mode = 2
+text = "Press [E] to collect sample"
+label_settings = SubResource("LabelSettings_f6xyr")
+
+[node name="EscapeLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InteractionsLabels" unique_id=1459992554]
+layout_mode = 2
+text = "Press [ESC] to quit"
 label_settings = SubResource("LabelSettings_f6xyr")
