@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-Godot 4.7 (Forward+, Jolt Physics), GDScript only, no C#. It's a Mars rover sandbox. There is no main scene set yet, so `godot --headless --quit` refuses to run the project. Run a specific scene or script instead.
+Godot 4.7 (Forward+, Jolt Physics), GDScript only, no C#. It's a Mars rover sandbox. The main scene is `scenes/mainmenu.tscn`, whose Play button loads the sandbox. For tests and probes, run a specific scene or script.
 
 - `scenes/terrain_sandbox.tscn` is the playground: terrain, camera, light and a Mars `WorldEnvironment` (tan sky, depth fog tuned to hide the edge of the loaded area).
 - `prefabs/` holds reusable scenes: `terrain.tscn` (the generator) and `rover.tscn` (`scripts/rover.gd`: a `CharacterBody3D` with W/S drive and A/D turn, using raw physical keys rather than InputMap. The MER model faces +Z, so it is turned 180° and tilted to the floor normal while the box collider stays upright).
@@ -13,14 +13,17 @@ Godot 4.7 (Forward+, Jolt Physics), GDScript only, no C#. It's a Mars rover sand
 - POIs are `Poi` nodes (`scripts/poi.gd`, an `Area3D`). Set `kind` to `LOCATION` to snap to the ground, or to `ROCK` to snap to the nearest boulder from `TerrainGenerator.nearest_rock()`, which computes it from the hash so the chunk needn't be loaded. A rock POI also gets a glowing shell (`assets/shaders/poi_highlight.gdshader`). Each POI places `prefabs/waystone.tscn`, whose beam ignores fog so it shows from far away, and emits `reached` when the rover enters `radius`. It must come after the terrain in the tree. The sandbox has `RockPoi` and `CraterPoi`, the latter on the floor of a real crater for seed 42.
 - The event system is `Mission` (`scripts/mission.gd`). It plays its `MissionEvent` children (`scripts/mission_event.gd`) in tree order. Each event waits `delay` seconds after the previous one, and also waits for the rover to be inside its `poi` if it has one. That POI stays hidden until the event is the target and hides again once it's reached. Events with `idle` set are taken out of the sequence and play in turn whenever the rover has stood still for `idle_after` seconds. A transmission shows its lines from the dialog box's JSON (`scenes/UI/dialog_box.tscn` with `assets/mission_1.json`), each kept up for its share of the voice clip, and `event_started` fires for each one.
 - `Audio` (`scripts/audio_controller.gd`) is an autoload. Transmissions go through `play_voice()`, which has one channel, so a new transmission cuts off the old one.
-- Voice clips are `assets/audio/sy.*.wav`, imported with `edit/normalize=true` because the recordings are very quiet (peaks around -20 dB). The intro is `Prologue_1` then `Prologue_2`, played back to back from an `AudioStreamPlaylist` (`fade_time = 0`) in the sandbox. `Trans_N` is `Transmission 0N` and `Idle_N` is `Idle 0N`. New clips need normalize turned on in their `.import` file.
+- Voice clips are `assets/audio/sy.*.wav`, imported with `edit/normalize=true` because the recordings are very quiet (peaks around -20 dB). The intro is `Prologue_1` then `Prologue_2`, played back to back from an `AudioStreamPlaylist` (`fade_time = 0`) in the sandbox. `Trans_N` is `Transmission 0N` and `Idle_N` is `Idle 0N`. New clips need normalize turned on in their `.import` file. The exceptions are the ElevenLabs MP3s `sy.Mission_completed.mp3` and `sy.Doom.mp3` (`Doom on the horizon`), which are already loud and have no normalize option. `Battery low` and `Only silence` have no voice, so they stay up for `chars / read_speed`.
+- The sequence ends with `Transmission 05` → `Mission completed` → `Transmission 06` (starts the storm) → `Battery low` → `Doom on the horizon` → `Only silence`. Then `Mission.end_scene` (`mainmenu.tscn`) loads after `end_delay`.
 - `CameraRig` zooms in from `intro_distance` to the spring arm's length on start.
 - The sandbox HUD has a compass bar (`scripts/UI/compass.gd`) that follows the camera's heading. North is -Z and east is +X.
 - HUD controls need `mouse_filter = 2` (IGNORE). A `Control` defaults to STOP and swallows the clicks `CameraRig` reads in `_unhandled_input`. Headless probes don't show this, because there's no GUI picking without a window.
 - Headless, `MultiMesh.get_instance_transform()` reads back zero (the renderer is a dummy). Tests check rocks through their colliders.
 - Physics interpolation is on (`project.godot`). Anything that follows a physics body from `_process` must read `get_global_transform_interpolated()` and set `physics_interpolation_mode = OFF` on itself, as `CameraRig` does.
 - A new `class_name` is unknown to `-s` scripts until the class cache is refreshed: `timeout -s KILL 120 godot --headless --import < /dev/null`.
-- `scenes/mainmenu.tscn` is an empty placeholder.
+- `scenes/mainmenu.tscn` is the title menu (Play, authors, links, exit). In the sandbox, ESC opens `scenes/UI/game_menu.tscn` (resume, options, main menu, quit).
+- `Sandstorm` (`scripts/Events/sandstorm.gd`) starts when the mission plays `Transmission 06`: fog, darkness and dust ramp up over `ramp_up`, and the rover is locked (`is_stopped`) while `intensity >= lock_at`. With `clears = false` (the default, since the mission ends in the storm) it stays at `peak`. With `true` it holds and then fades. Its `Mission` is optional, since `test_mission` replaces it.
+- `analyze_area.gd` (press E to analyze a nearby body in group `Analyzis`) is only wired up in `scenes/analysis-test.tscn`, not on the sandbox rover.
 
 ## Commands
 

@@ -26,6 +26,8 @@
 [ext_resource type="AudioStream" uid="uid://cidvcu0ffvynd" path="res://assets/audio/sy.Trans_4.wav" id="a_trans_4"]
 [ext_resource type="AudioStream" uid="uid://is4msorx2mwr" path="res://assets/audio/sy.Trans_5.wav" id="a_trans_5"]
 [ext_resource type="AudioStream" uid="uid://dqneqfmtnqqvr" path="res://assets/audio/sy.Trans_6.wav" id="a_trans_6"]
+[ext_resource type="AudioStream" uid="uid://bacnqdoed530" path="res://assets/audio/sy.Mission_completed.mp3" id="a_mission_completed"]
+[ext_resource type="AudioStream" uid="uid://ccjbtobfa14pl" path="res://assets/audio/sy.Doom.mp3" id="a_doom"]
 [ext_resource type="Texture2D" uid="uid://5tlifylu847i" path="res://assets/img/dust_soft.png" id="tex_dust"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ufshk"]
@@ -187,6 +189,7 @@ draw_pass_1 = SubResource("QuadMesh_x35my")
 script = ExtResource("8_mission")
 rover = NodePath("../Rover")
 dialog = NodePath("../HUD/DialogBox")
+end_scene = "res://scenes/mainmenu.tscn"
 
 [node name="Intro" type="Node" parent="Mission" unique_id=704131812]
 script = ExtResource("9_event")
@@ -230,11 +233,33 @@ transmission = "Transmission 05"
 voice = ExtResource("a_trans_5")
 poi = NodePath("../../CraterPoi")
 
+[node name="MissionCompleted" type="Node" parent="Mission" unique_id=1588203471]
+script = ExtResource("9_event")
+transmission = "Mission completed"
+voice = ExtResource("a_mission_completed")
+delay = 8.0
+
 [node name="Transmission06" type="Node" parent="Mission" unique_id=1291613256]
 script = ExtResource("9_event")
 transmission = "Transmission 06"
 voice = ExtResource("a_trans_6")
 delay = 45.0
+
+[node name="BatteryLow" type="Node" parent="Mission" unique_id=731904862]
+script = ExtResource("9_event")
+transmission = "Battery low"
+delay = 4.0
+
+[node name="DoomOnTheHorizon" type="Node" parent="Mission" unique_id=1946027315]
+script = ExtResource("9_event")
+transmission = "Doom on the horizon"
+voice = ExtResource("a_doom")
+delay = 3.0
+
+[node name="OnlySilence" type="Node" parent="Mission" unique_id=402817596]
+script = ExtResource("9_event")
+transmission = "Only silence"
+delay = 5.0
 
 [node name="Idle01" type="Node" parent="Mission" unique_id=15841379]
 script = ExtResource("9_event")
