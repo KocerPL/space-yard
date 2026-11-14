@@ -1,0 +1,52 @@
+[gd_scene format=3 uid="uid://bxdkqj80c25fo"]
+
+[ext_resource type="Script" uid="uid://b4ruyf52jwrl" path="res://scripts/UI/dialog_test.gd" id="1_0h848"]
+[ext_resource type="PackedScene" uid="uid://b1xqqbilegb6" path="res://scenes/UI/dialog_box.tscn" id="1_g6ub3"]
+
+[node name="DialogTest" type="Control" unique_id=1407833139]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_0h848")
+
+[node name="DialogBox" parent="." unique_id=1684674770 instance=ExtResource("1_g6ub3")]
+layout_mode = 1
+offset_left = 184.0
+offset_top = 345.0
+offset_right = -168.0
+offset_bottom = -3.0
+
+[node name="Button" type="Button" parent="." unique_id=1562228713]
+layout_mode = 0
+offset_left = 136.0
+offset_top = 157.0
+offset_right = 228.0
+offset_bottom = 188.0
+text = "Test dialog 1"
+
+[node name="Button2" type="Button" parent="." unique_id=1564221307]
+layout_mode = 0
+offset_left = 379.0
+offset_top = 160.0
+offset_right = 484.0
+offset_bottom = 191.0
+text = "Test dialog 2"
+
+[node name="NextLine" type="Button" parent="." unique_id=1484148740]
+layout_mode = 0
+offset_left = 403.0
+offset_top = 245.0
+offset_right = 508.0
+offset_bottom = 276.0
+text = "Next line"
+
+[node name="Button3" type="Button" parent="." unique_id=909535248]
+layout_mode = 0
+offset_left = 617.0
+offset_top = 161.0
+offset_right = 722.0
+offset_bottom = 192.0
+text = "Missing dialog"
