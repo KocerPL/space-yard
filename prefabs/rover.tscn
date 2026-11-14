@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://whaa2icvrmkm"]
+
+[ext_resource type="PackedScene" uid="uid://7v8yxv65ccgh" path="res://assets/models/rover_glb/24883_MER_static.glb" id="1_hi7qs"]
+
+[node name="Node" type="Node" unique_id=394381683]
+
+[node name="24883_MER_static" parent="." unique_id=1112189111 instance=ExtResource("1_hi7qs")]
