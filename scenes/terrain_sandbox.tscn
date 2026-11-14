@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c1g7fm815hbt3"]
 
 [ext_resource type="PackedScene" uid="uid://bo2wg8t1btmw0" path="res://prefabs/terrain.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://cq83q7xpp664l" path="res://scenes/UI/telemetry.tscn" id="1_ltp6j"]
 [ext_resource type="PackedScene" uid="uid://whaa2icvrmkm" path="res://prefabs/rover.tscn" id="2_rover"]
 [ext_resource type="Script" uid="uid://c14chhwt2txll" path="res://scripts/orbit_camera.gd" id="3_orbit"]
 
@@ -30,6 +31,20 @@ fog_depth_end = 62.0
 
 [node name="Node3D" type="Node3D" unique_id=1735938896]
 
+[node name="Telemetry" parent="." unique_id=731554939 instance=ExtResource("1_ltp6j")]
+
+[node name="BlueberriesLabel" parent="Telemetry/PanelContainer/MarginContainer/VBoxContainer/FoundSamples" parent_id_path=PackedInt32Array(731554939, 1011168607) index="0" unique_id=313963310]
+visible = false
+
+[node name="MartianRockLabel" parent="Telemetry/PanelContainer/MarginContainer/VBoxContainer/FoundSamples" parent_id_path=PackedInt32Array(731554939, 1011168607) index="1" unique_id=1652450722]
+visible = false
+
+[node name="CraterSoilLabel" parent="Telemetry/PanelContainer/MarginContainer/VBoxContainer/FoundSamples" parent_id_path=PackedInt32Array(731554939, 1011168607) index="2" unique_id=1914255375]
+visible = false
+
+[node name="CollectSampleLabel" parent="Telemetry/PanelContainer/MarginContainer/VBoxContainer/InteractionsLabels" parent_id_path=PackedInt32Array(731554939, 338422783) index="0" unique_id=980223411]
+visible = false
+
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=383264152]
 environment = SubResource("env")
 
@@ -54,3 +69,5 @@ transform = Transform3D(0.8660254, -0.3535534, 0.3535534, 0, 0.7071068, 0.707106
 light_color = Color(1, 0.93, 0.85, 1)
 light_energy = 0.9
 shadow_enabled = true
+
+[editable path="Telemetry"]
