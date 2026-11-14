@@ -1,39 +1,55 @@
 [gd_scene format=3 uid="uid://ddkxtafn8hxux"]
 
 [ext_resource type="AudioStream" uid="uid://bi1ilmaqumvxw" path="res://assets/audio/mars_music.wav" id="1_37jcm"]
+[ext_resource type="AudioStream" uid="uid://x4o01csukct4" path="res://assets/audio/mars_tensse_long.wav" id="2_6gwap"]
 
 [sub_resource type="GDScript" id="GDScript_3owqy"]
 script/source = "extends Node
 
-@onready var a_player = $AudioStreamPlayer
+@onready var main_track_player = $MainTrack
+@onready var tense_track_player = $TenseTrack
 
-var target_volume = -15
+var target_volume = 0
 const change_speed = 0.3
 
 func _ready():
-	a_player.play()
+	main_track_player.play()
 
 func _process(delta):
-	var volume = a_player.volume_db
+	var volume = main_track_player.volume_db
 	
 	var volume_change = (target_volume - volume) * delta * change_speed
 	
-	a_player.volume_db += volume_change
+	main_track_player.volume_db += volume_change
+	tense_track_player.volume_db += volume_change
 
 func set_target_volume(value):
 	target_volume = value
 
 func stop():
-	a_player.stream_paused = true
+	main_track_player.stop()
 
 func start():
-	a_player.stream_paused = false
+	main_track_player.play()
+
+
+func play_tense_track():
+	#set_target_volume(-100)
+	main_track_player.stop()
+	tense_track_player.play()
+
+#func _on_tense_track_finished():
+	#main_track_player.play()
 "
 
 [node name="MusicPlayer" type="Node" unique_id=942982293]
 process_mode = 3
 script = SubResource("GDScript_3owqy")
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1088871652]
+[node name="MainTrack" type="AudioStreamPlayer" parent="." unique_id=1088871652]
 stream = ExtResource("1_37jcm")
-volume_db = -15.0
+
+[node name="TenseTrack" type="AudioStreamPlayer" parent="." unique_id=1822584182]
+stream = ExtResource("2_6gwap")
+
+[connection signal="finished" from="TenseTrack" to="." method="_on_tense_track_finished"]
