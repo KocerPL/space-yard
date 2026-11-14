@@ -1,5 +1,5 @@
 extends Node3D
-## Pivot that follows `target`; mouse orbits it. Click to capture the mouse, Esc to release.
+## Pivot that follows `target`; dragging with the left mouse button orbits it.
 ## Expects a SpringArm3D child holding the Camera3D, so the camera stops at terrain instead of clipping.
 
 @export var target: Node3D
@@ -16,11 +16,10 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.pressed:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
-	elif event.is_action_pressed("ui_cancel"):
-		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	elif event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		# captured while held, so the drag doesn't stop at the window edge
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED if event.pressed else Input.MOUSE_MODE_VISIBLE
+	elif event is InputEventMouseMotion and event.button_mask & MOUSE_BUTTON_MASK_LEFT:
 		rotation.y -= event.relative.x * sensitivity
 		rotation.x = clampf(rotation.x - event.relative.y * sensitivity, deg_to_rad(pitch_limits.x), deg_to_rad(pitch_limits.y))
 
