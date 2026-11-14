@@ -1,0 +1,111 @@
+[gd_scene format=3 uid="uid://b8jns8abmxnfv"]
+
+[ext_resource type="Script" uid="uid://di3a7jg2w6ow6" path="res://scripts/game_menu.gd" id="1_g8c50"]
+[ext_resource type="FontFile" uid="uid://c44j3jtbdoew1" path="res://assets/fonts/Nasalization Rg.otf" id="1_tqq0c"]
+[ext_resource type="PackedScene" uid="uid://dfnsa415oc33h" path="res://scenes/MenuButton.tscn" id="2_g8c50"]
+[ext_resource type="PackedScene" uid="uid://c5vwudqbni41t" path="res://scenes/options_menu.tscn" id="4_ywgnr"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_epuwg"]
+font = ExtResource("1_tqq0c")
+font_size = 100
+
+[sub_resource type="LabelSettings" id="LabelSettings_f6xyr"]
+font = ExtResource("1_tqq0c")
+font_size = 50
+
+[node name="GameMenu" type="Control" unique_id=1827455243 node_paths=PackedStringArray("optionsMenu", "mainControls")]
+process_mode = 3
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_g8c50")
+optionsMenu = NodePath("OptionsMenu")
+mainControls = NodePath("MainControls")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=666017248]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.36862746)
+
+[node name="MainControls" type="Control" parent="." unique_id=92909972]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="MainControls" unique_id=116254804]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 253.5
+offset_right = 858.5
+offset_bottom = 443.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="MainControls/VBoxContainer2" unique_id=2063568504]
+layout_mode = 2
+text = "Space Yard"
+label_settings = SubResource("LabelSettings_epuwg")
+horizontal_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainControls/VBoxContainer2" unique_id=1328469316]
+layout_mode = 2
+size_flags_horizontal = 4
+alignment = 1
+
+[node name="MenuLabel" type="Label" parent="MainControls/VBoxContainer2/VBoxContainer" unique_id=906066471]
+layout_mode = 2
+text = "MENU"
+label_settings = SubResource("LabelSettings_f6xyr")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="MainControls/VBoxContainer2/VBoxContainer" unique_id=1248412974]
+layout_mode = 2
+
+[node name="ResumeButton" parent="MainControls/VBoxContainer2/VBoxContainer" unique_id=1729503349 instance=ExtResource("2_g8c50")]
+layout_mode = 2
+text = "Resume"
+
+[node name="Spacer1" type="Control" parent="MainControls/VBoxContainer2/VBoxContainer" unique_id=1592247927]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="MainMenuButton" parent="MainControls/VBoxContainer2/VBoxContainer" unique_id=1136839385 instance=ExtResource("2_g8c50")]
+layout_mode = 2
+text = "Main menu"
+
+[node name="Spacer2" type="Control" parent="MainControls/VBoxContainer2/VBoxContainer" unique_id=1318541427]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="OptionsButton" parent="MainControls/VBoxContainer2/VBoxContainer" unique_id=1737086205 instance=ExtResource("2_g8c50")]
+layout_mode = 2
+text = "Options"
+
+[node name="Spacer3" type="Control" parent="MainControls/VBoxContainer2/VBoxContainer" unique_id=1953904145]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="QuitButton" parent="MainControls/VBoxContainer2/VBoxContainer" unique_id=1928972879 instance=ExtResource("2_g8c50")]
+layout_mode = 2
+text = "QUIT"
+
+[node name="OptionsMenu" parent="." unique_id=505231594 instance=ExtResource("4_ywgnr")]
+visible = false
+layout_mode = 1
+
+[connection signal="pressed" from="MainControls/VBoxContainer2/VBoxContainer/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="MainControls/VBoxContainer2/VBoxContainer/MainMenuButton" to="." method="_on_main_menu_button_pressed"]
+[connection signal="pressed" from="MainControls/VBoxContainer2/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
+[connection signal="pressed" from="MainControls/VBoxContainer2/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="returnButtonPressed" from="OptionsMenu" to="." method="_on_options_menu_return_button_pressed"]

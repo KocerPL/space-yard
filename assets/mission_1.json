@@ -1,24 +1,22 @@
 {
 	"Intro": [
-		"Built to last 90 days.",
-		"Destined to survive for 15 years.",
-		"In January 2004, the Opportunity rover landed in Meridiani Planum. Its mission: to read the rocks and find the lost waters of Mars.",
-		"Long before the dust claimed it... this was Day One."
+		"Built to last 90 days. Destined to survive for 15 years. In January 2004, the Opportunity rover landed in Meridiani Planum. Its mission: to read the rocks and find the lost waters of Mars. Long before the dust claimed it...\nthis was Day One."
+	],
+	
+	"BOOT_SEQUENCE": [
+		"> INITIATING BOOT SEQUENCE...\n> UNIT: Mars Exploration Rover - B (Opportunity)\n> LANDING SITE: Meridiani Planum, Mars\n> PRIMARY DIRECTIVE: Conduct field geology and identify evidence of ancient liquid water.\n> SYSTEM STATUS: Nominal. Solar arrays deployed.\n> AWAITING INSTRUCTIONS..."
 	],
 	
 	"Transmission 01": [
-		"JPL Control to Opportunity. Telemetry looks good. You survived the bounce and arrived in one piece, Oppy. We are officially beginning your surface operations.",
-		"Your primary directive is to examine the local Martian bedrock. We need to find out if liquid water really flowed here in the ancient past. Roll out when ready."
+		"JPL Control to Opportunity. Telemetry looks good. You survived the bounce and arrived in one piece, Oppy. We are officially beginning your surface operations. Your primary directive is to examine the local Martian bedrock. We need to find out if liquid water really flowed here in the ancient past. Roll out when ready."
 	],
 	
 	"Transmission 02": [
-		"We're seeing some interesting outcroppings just ahead of your position.",
-		"Drive up to that rock formation and deploy your robotic arm. We need the Alpha Particle X-ray Spectrometer to tell us exactly what this soil is made of."
+		"We're seeing some interesting outcroppings just ahead of your position. Drive up to that rock formation and deploy your robotic arm. We need the Alpha Particle X-ray Spectrometer to tell us exactly what this soil is made of."
 	],
 	
 	"Transmission 03": [
-		"Data received. Outstanding work, Oppy. The instruments are picking up strong signatures of hematite in those small, round rocks. We're calling them 'blueberries'.",
-		"On Earth, that mineral usually forms in liquid water. Keep pushing forward, we need to gather a larger sample size to be sure."
+		"Data received. Outstanding work, Oppy. The instruments are picking up strong signatures of hematite in those small, round rocks. We're calling them 'blueberries'. On Earth, that mineral usually forms in liquid water. Keep pushing forward, we need to gather a larger sample size to be sure."
 	],
 	
 	"Transmission 04": [
@@ -26,27 +24,38 @@
 	],
 	
 	"Transmission 05": [
-		"Spectroscopy is confirmed. We are looking at cross-bedded rocks, definitively shaped by flowing currents.",
-		"You did it, Opportunity. You just proved that Meridiani Planum was once a shallow, salty sea. Take a moment to capture the panorama. History is being made today."
+		"Spectroscopy is confirmed. We are looking at cross-bedded rocks, definitively shaped by flowing currents. You did it, Opportunity. You just proved that Meridiani Planum was once a shallow, salty sea. Take a moment to capture the panorama. History is being made today."
 	],
 	
 	"Transmission 06": [
-		"Opportunity, atmospheric sensors are picking up a massive spike in opacity. A global dust storm is moving in fast. Solar generation is dropping.",
-		"Find a safe spot to park and initiate deep sleep mode. We will be waiting for your signal when the skies clear. Good luck, old friend."
+		"Opportunity, atmospheric sensors are picking up a massive spike in opacity. A global dust storm is moving in fast. Solar generation is dropping. Find a safe spot to park and initiate deep sleep mode. We will be waiting for your signal when the skies clear. Good luck, old friend."
 	],
 	
 	"Idle 01": [
-		"Opportunity, JPL. Telemetry shows your drive motors have been idle for a while.",
-		"We're running a quick diagnostic... everything looks green on our end. Just let us know when you're ready to get back on the move."
+		"Opportunity, JPL. Telemetry shows your drive motors have been idle for a while. We're running a quick diagnostic... everything looks green on our end. Just let us know when you're ready to get back on the move."
 	],
 	
 	"Idle 02": [
-		"JPL to Oppy. We see you've stopped moving. Just taking in the view, huh? It's a beautiful horizon, we can't blame you.",
-		"But we still have a lot of ground to cover. Roll out when ready."
+		"JPL to Oppy. We see you've stopped moving. Just taking in the view, huh? It's a beautiful horizon, we can't blame you. But we still have a lot of ground to cover. Roll out when ready."
 	],
 	
 	"Idle 03": [
-		"Opportunity, please verify status. We're seeing zero movement on the grid. Watch out for those sand drifts, we don't want you getting stuck.",
-		"Send us a ping and initiate a drive sequence when you can."
+		"Opportunity, please verify status. We're seeing zero movement on the grid. Watch out for those sand drifts, we don't want you getting stuck. Send us a ping and initiate a drive sequence when you can."
+	],
+	
+	"Mission completed": [
+		"Opportunity... JPL Control here. We're looking at the mission clock. Sol 90. Your primary warranty just expired. You found the water, you mapped the crater, and you completed every single objective we gave you. You were only supposed to last three months... but your solar arrays are clean and you're still running perfectly. We've just received authorization for an extended mission. The primary directive is done, Oppy. Now? Now we just explore. Chart a course for the open plains. Let's see what else is out there."
+	],
+	
+	"Battery low": [
+		"> WARNING: ATMOSPHERIC OPACITY CRITICAL.\n> SOLAR IRRADIANCE DROPPING FAST.\n> REROUTING REMAINING POWER TO CORE HEATERS."
+	],
+	
+	"Doom on the horizon": [
+		"Oppy, we are seeing a severe drop in your power levels. The storm is right on top of you. We are transmitting the command to initiate emergency deep sleep. Conserve your energy. We will wake you up when the skies clear... just hold on down there. Good luck."
+	],
+	
+	"Only silence": [
+		"> TELEMETRY UPDATE FAILED.\n> CRITICAL POWER LOSS DETECTED.\n> TEMPERATURE DROPPING.\n> ...\n> My battery is low and it's getting dark.\n> ...\n> COMM-LINK SEVERED."
 	]
 }
