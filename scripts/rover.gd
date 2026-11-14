@@ -41,6 +41,8 @@ var _steer := PackedFloat32Array([0, 0, 0, 0, 0, 0])
 @onready var _bogies: Array[Node3D] = [$Model/Body/Rocker_L/Bogie_L, $Model/Body/Rocker_R/Bogie_R]
 
 
+var is_stopped = false
+
 func _ready() -> void:
 	for n in WHEELS:
 		_wheels.append(_model.find_child("Wheel_" + n))
@@ -64,6 +66,9 @@ func _exit_tree() -> void:
 
 
 func _physics_process(delta: float) -> void:
+	if is_stopped:
+		return
+	
 	# shortcut: raw physical keys, move to InputMap actions when rebinding or gamepad support is needed
 	var drive := float(Input.is_physical_key_pressed(KEY_W)) - float(Input.is_physical_key_pressed(KEY_S))
 	var steer := float(Input.is_physical_key_pressed(KEY_A)) - float(Input.is_physical_key_pressed(KEY_D))

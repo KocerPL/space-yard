@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[global_group]
+
+Analyzis="For objects that can be analyzed"
+
 [importer_defaults]
 
 animation_library={
