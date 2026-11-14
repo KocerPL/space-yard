@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://ccbc2yi7hoodo"]
+[gd_scene format=3 uid="uid://gbsxivt1asw0"]
 
 [ext_resource type="FontFile" uid="uid://c44j3jtbdoew1" path="res://assets/fonts/Nasalization Rg.otf" id="1_5mbse"]
 [ext_resource type="Script" uid="uid://b8o43n5n2b23s" path="res://scripts/UI/mainmenu.gd" id="1_h73c4"]
