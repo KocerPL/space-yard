@@ -9,12 +9,14 @@
 [ext_resource type="PackedScene" uid="uid://b1xqqbilegb6" path="res://scenes/UI/dialog_box.tscn" id="7_dialog"]
 [ext_resource type="Script" path="res://scripts/mission.gd" id="8_mission"]
 [ext_resource type="Script" path="res://scripts/mission_event.gd" id="9_event"]
-[ext_resource type="AudioStream" uid="uid://b8oopmvhkycd4" path="res://assets/audio/sy.Initial_1.wav" id="a_initial_1"]
-[ext_resource type="AudioStream" uid="uid://bficmfqrf04d5" path="res://assets/audio/sy.Initial_2.wav" id="a_initial_2"]
-[ext_resource type="AudioStream" uid="uid://bcekwvavjo6ej" path="res://assets/audio/sy.Trans_1.wav" id="a_trans_1"]
-[ext_resource type="AudioStream" uid="uid://cidvcu0ffvynd" path="res://assets/audio/sy.Trans_2.wav" id="a_trans_2"]
-[ext_resource type="AudioStream" uid="uid://xx7mqexydrbv" path="res://assets/audio/sy.Trans_3.wav" id="a_trans_3"]
-[ext_resource type="AudioStream" uid="uid://b0ve0rf7iavuw" path="res://assets/audio/sy.Trans_4.wav" id="a_trans_4"]
+[ext_resource type="AudioStream" uid="uid://ccwhssc2hvoba" path="res://assets/audio/sy.Prologue_1.wav" id="a_prologue_1"]
+[ext_resource type="AudioStream" uid="uid://dwjdp8vmhwwom" path="res://assets/audio/sy.Prologue_2.wav" id="a_prologue_2"]
+[ext_resource type="AudioStream" uid="uid://b8oopmvhkycd4" path="res://assets/audio/sy.Trans_1.wav" id="a_trans_1"]
+[ext_resource type="AudioStream" uid="uid://bficmfqrf04d5" path="res://assets/audio/sy.Trans_2.wav" id="a_trans_2"]
+[ext_resource type="AudioStream" uid="uid://bcekwvavjo6ej" path="res://assets/audio/sy.Trans_3.wav" id="a_trans_3"]
+[ext_resource type="AudioStream" uid="uid://cidvcu0ffvynd" path="res://assets/audio/sy.Trans_4.wav" id="a_trans_4"]
+[ext_resource type="AudioStream" uid="uid://xx7mqexydrbv" path="res://assets/audio/sy.Trans_5.wav" id="a_trans_5"]
+[ext_resource type="AudioStream" uid="uid://b0ve0rf7iavuw" path="res://assets/audio/sy.Trans_6.wav" id="a_trans_6"]
 [ext_resource type="AudioStream" uid="uid://b8v2lgilcgm8v" path="res://assets/audio/sy.Idle_1.wav" id="a_idle_1"]
 [ext_resource type="AudioStream" uid="uid://digwk0865m72s" path="res://assets/audio/sy.Idle_2.wav" id="a_idle_2"]
 [ext_resource type="AudioStream" uid="uid://clag0cdk7n67a" path="res://assets/audio/sy.Idle_3.wav" id="a_idle_3"]
@@ -47,8 +49,8 @@ fog_depth_end = 62.0
 fade_time = 0.0
 loop = false
 stream_count = 2
-stream_0 = ExtResource("a_initial_1")
-stream_1 = ExtResource("a_initial_2")
+stream_0 = ExtResource("a_prologue_1")
+stream_1 = ExtResource("a_prologue_2")
 
 [node name="Node3D" type="Node3D" unique_id=1735938896]
 
@@ -154,11 +156,13 @@ delay = 10.0
 [node name="Transmission05" type="Node" parent="Mission" node_paths=PackedStringArray("poi")]
 script = ExtResource("9_event")
 transmission = "Transmission 05"
+voice = ExtResource("a_trans_5")
 poi = NodePath("../../CraterPoi")
 
 [node name="Transmission06" type="Node" parent="Mission"]
 script = ExtResource("9_event")
 transmission = "Transmission 06"
+voice = ExtResource("a_trans_6")
 delay = 45.0
 
 [node name="Idle01" type="Node" parent="Mission"]
