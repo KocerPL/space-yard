@@ -34,7 +34,7 @@ godot scenes/terrain_sandbox.tscn
 Headless gotchas:
 - A failed `assert` drops Godot into the debugger waiting on stdin, so it hangs. Always use `timeout -s KILL` and `< /dev/null`, and read the log for `SCRIPT ERROR`.
 - Don't `pkill -f "godot --headless"`: the pattern matches the calling shell's own command line and kills it. The user often has the editor (`godot -e`) open too.
-- `-s` scripts compile before autoloads are declared, so a test that names a class using `Audio` fails with "Identifier not found: Audio". Load that script at runtime instead, e.g. `load("res://scripts/mission.gd").new()`.
+- Reach autoloads with `get_node("/root/Audio")`, not the bare `Audio` name. `-s` scripts and an editor opened before an autoload was added don't declare it, so naming it is a compile error ("Identifier not found: Audio").
 - Quitting while a voice clip plays logs a leaked `AudioStreamWAV` and "resources still in use" at exit (the audio server frees playback a mix step later). This is harmless, e.g. in `test_rover`, which quits during the intro.
 - Nodes added in a `SceneTree._initialize()` don't get `_ready()` until the main loop starts. `await process_frame` after `add_child` before asserting on them.
 - To check visuals, run a temporary `-s` script **without** `--headless` that instantiates the scene, awaits ~20 frames, then saves `root.get_viewport().get_texture().get_image()` as a PNG.

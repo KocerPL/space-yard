@@ -16,7 +16,7 @@ func _initialize() -> void:
 	data.resize(4410) # 0.1 s of 8-bit mono at 44.1 kHz
 	beep.data = data
 
-	var mission: Node = load("res://scripts/mission.gd").new() # loaded at runtime: the Audio autoload isn't declared yet when -s compiles this file
+	var mission := Mission.new()
 	mission.rover = rover
 	mission.dialog = dialog
 	mission.idle_after = 0.4

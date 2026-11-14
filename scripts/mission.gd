@@ -20,6 +20,9 @@ var _next := 0
 var _waited := 0.0
 var _still := 0.0
 var _busy := false
+## The Audio autoload, looked up instead of named: naming it doesn't compile where autoloads aren't declared
+## (-s scripts, or an editor opened before the autoload was added).
+@onready var _audio: Node = get_node("/root/Audio")
 
 
 func _ready() -> void:
@@ -30,7 +33,7 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
-	Audio.stop_voice() # Audio outlives the scene
+	_audio.stop_voice() # Audio outlives the scene
 
 
 func _process(delta: float) -> void:
@@ -67,7 +70,7 @@ func _play(e: MissionEvent) -> void:
 		chars += line.length()
 	var length := e.voice.get_length() if e.voice else chars / read_speed
 	if e.voice:
-		Audio.play_voice(e.voice)
+		_audio.play_voice(e.voice)
 	if lines.is_empty():
 		await get_tree().create_timer(length).timeout
 	else:
