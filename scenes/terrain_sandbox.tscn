@@ -80,9 +80,8 @@ size = Vector2(0.04, 0.04)
 [sub_resource type="AudioStreamPlaylist" id="intro_voice"]
 loop = false
 fade_time = 0.0
-stream_count = 2
+stream_count = 1
 stream_0 = ExtResource("a_prologue_1")
-stream_1 = ExtResource("a_prologue_2")
 
 [node name="Node3D" type="Node3D" unique_id=1735938896]
 
@@ -150,7 +149,6 @@ shadow_enabled = true
 
 [node name="Sandstorm" type="Node" parent="." unique_id=719969779]
 script = ExtResource("4_ltp6j")
-intensity = 0.114
 
 [node name="DustFollow" type="Node3D" parent="Sandstorm" unique_id=936108869]
 
@@ -173,6 +171,12 @@ script = ExtResource("9_event")
 transmission = "Intro"
 voice = SubResource("intro_voice")
 delay = 3.5
+
+[node name="Boot" type="Node" parent="Mission" unique_id=1298542275]
+script = ExtResource("9_event")
+transmission = "BOOT_SEQUENCE"
+voice = ExtResource("a_prologue_2")
+delay = 5.0
 
 [node name="Transmission01" type="Node" parent="Mission" unique_id=846545651]
 script = ExtResource("9_event")
