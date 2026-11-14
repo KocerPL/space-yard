@@ -30,7 +30,7 @@ grow_horizontal = 2
 grow_vertical = 2
 alignment = 1
 
-[node name="Label" type="Label" parent="VBoxContainer" unique_id=1680866575]
+[node name="TitleLabel" type="Label" parent="VBoxContainer" unique_id=1680866575]
 layout_mode = 2
 text = "Options"
 label_settings = SubResource("LabelSettings_f6xyr")
@@ -39,14 +39,14 @@ horizontal_alignment = 1
 [node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=1524365556]
 layout_mode = 2
 
-[node name="Control" type="Control" parent="VBoxContainer" unique_id=1634775915]
+[node name="Spacer1" type="Control" parent="VBoxContainer" unique_id=1634775915]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1266550872]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=452725469]
+[node name="VolumeLabel" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=452725469]
 layout_mode = 2
 text = "Volume"
 label_settings = SubResource("LabelSettings_epuwg")
@@ -55,14 +55,14 @@ label_settings = SubResource("LabelSettings_epuwg")
 custom_minimum_size = Vector2(10, 0)
 layout_mode = 2
 
-[node name="HSlider" type="HSlider" parent="VBoxContainer/HBoxContainer" unique_id=1261783310]
+[node name="VolumeSlider" type="HSlider" parent="VBoxContainer/HBoxContainer" unique_id=1261783310]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 tick_count = 20
 ticks_on_borders = true
 ticks_position = 2
 
-[node name="Control2" type="Control" parent="VBoxContainer" unique_id=811717774]
+[node name="Spacer2" type="Control" parent="VBoxContainer" unique_id=811717774]
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
@@ -70,4 +70,5 @@ layout_mode = 2
 layout_mode = 2
 text = "Return to menu"
 
+[connection signal="value_changed" from="VBoxContainer/HBoxContainer/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
 [connection signal="pressed" from="VBoxContainer/ReturnButton" to="." method="_on_return_button_pressed"]

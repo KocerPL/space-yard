@@ -7,6 +7,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	# 2. Check if the Escape key ("ui_cancel") was just pressed
 	if event.is_action_pressed("ui_cancel"):
 		get_tree().paused = true;
+		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		gameMenu.show();
 
 
