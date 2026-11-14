@@ -10,5 +10,9 @@ extends Node
 @export var delay := 0.0
 ## Also waits until the rover is inside this POI. The POI stays hidden until it's the target, and hides once reached.
 @export var poi: Poi
+## With a POI: once there, waits for E, then stops the rover for the Mission's analyze_time before playing.
+@export var analyze := false
+## Shown when the analysis finishes, e.g. a found-sample label in the telemetry.
+@export var sample: Control
 ## Not part of the sequence: plays when the rover has stood still for the Mission's idle_after seconds.
 @export var idle := false

@@ -1,6 +1,6 @@
 {
 	"Intro": [
-		"Built to last 90 days. Destined to survive for 15 years. In January 2004, the Opportunity rover landed in Meridiani Planum. Its mission: to read the rocks and find the lost waters of Mars. Long before the dust claimed it...\nthis was Day One."
+		"Built to last 90 days. Destined to survive for 15 years. In January 2004, the Opportunity rover landed in Meridiani Planum. Its mission: to read the rocks and find the lost waters of Mars. Long before the dust claimed it...\nThis was Day One."
 	],
 	
 	"BOOT_SEQUENCE": [
@@ -57,5 +57,17 @@
 	
 	"Only silence": [
 		"> TELEMETRY UPDATE FAILED.\n> CRITICAL POWER LOSS DETECTED.\n> TEMPERATURE DROPPING.\n> ...\n> My battery is low and it's getting dark.\n> ...\n> COMM-LINK SEVERED."
+	],
+
+	"No response": [
+		"For months, the dust storm raged.\nWhen the skies finally cleared, the rover did not wake up.\nOn February 13, 2019, NASA sent its final command.\nThere was no response."
+	],
+
+	"Collected data": [
+		"MISSION DURATION: Planned for 90 days. Achieved 15 years.\nTOTAL DISTANCE: 28.06 miles (45.16 km) — an off-world driving record.\nDISCOVERIES: Over 100 craters explored, the first meteorite found on another planet, and conclusive proof of ancient liquid water."
+	],
+
+	"Goodbye Oppy": [
+		"It sits forever silent in Perseverance Valley.\nA monument of wire and metal, left behind in the Martian dust.\nAbandoned, but not forgotten.\n\nRest well, Oppy."
 	]
 }
