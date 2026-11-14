@@ -81,7 +81,7 @@ var _trackers: Array[Node3D] = []
 var _noise := FastNoiseLite.new()
 var _color_noise := FastNoiseLite.new()
 var _detail_noise := FastNoiseLite.new()
-var _rock_mesh: ArrayMesh
+var rock_mesh: ArrayMesh # shared by every rock, and by POI highlights
 var _rock_points: PackedVector3Array # rock mesh vertices, for convex colliders
 var _active_seed := 0
 var _update_timer := 0.0
@@ -277,7 +277,7 @@ func _build_rock_mesh() -> void:
 	for i: int in arrays[Mesh.ARRAY_INDEX]:
 		st.add_vertex(_rock_points[i])
 	st.generate_normals()
-	_rock_mesh = st.commit()
+	rock_mesh = st.commit()
 
 
 func _scatter_rocks(body: StaticBody3D, coord: Vector2i) -> void:
@@ -286,27 +286,19 @@ func _scatter_rocks(body: StaticBody3D, coord: Vector2i) -> void:
 	var mm := MultiMesh.new()
 	mm.transform_format = MultiMesh.TRANSFORM_3D
 	mm.use_colors = true
-	mm.mesh = _rock_mesh
+	mm.mesh = rock_mesh
 	mm.instance_count = rocks_per_chunk
 	for i in rocks_per_chunk:
-		var lx := _rock_rand(coord, i, 0) * chunk_size
-		var lz := _rock_rand(coord, i, 1) * chunk_size
-		var size := lerpf(rock_size.x, rock_size.y, pow(_rock_rand(coord, i, 2), rock_size_bias))
-		var scl := size * Vector3(lerpf(0.7, 1.3, _rock_rand(coord, i, 3)), lerpf(0.45, 0.9, _rock_rand(coord, i, 4)),
-			lerpf(0.7, 1.3, _rock_rand(coord, i, 5)))
-		var rot := Basis.from_euler(Vector3(lerpf(-0.3, 0.3, _rock_rand(coord, i, 6)), _rock_rand(coord, i, 7) * TAU, 0.0))
-		var basis := rot * Basis.from_scale(scl)
-		var ground := sample_height(coord.x * chunk_size + lx, coord.y * chunk_size + lz)
-		var origin := Vector3(lx, ground + scl.y * 0.2, lz) # ~30% buried, so they sit in the dust
-		mm.set_instance_transform(i, Transform3D(basis, origin))
+		var t := _rock_transform(coord, i)
+		mm.set_instance_transform(i, t)
 		var tint := lerpf(0.7, 1.15, _rock_rand(coord, i, 8))
 		mm.set_instance_color(i, Color(tint, tint, tint))
-		if size >= rock_collision_size:
+		if _rock_size(coord, i) >= rock_collision_size:
 			var convex := ConvexPolygonShape3D.new()
-			convex.points = Transform3D(basis, Vector3.ZERO) * _rock_points # baked: colliders can't take non-uniform scale
+			convex.points = Transform3D(t.basis, Vector3.ZERO) * _rock_points # baked: colliders can't take non-uniform scale
 			var cs := CollisionShape3D.new()
 			cs.shape = convex
-			cs.position = origin
+			cs.position = t.origin
 			body.add_child(cs)
 	var mmi := MultiMeshInstance3D.new()
 	mmi.name = "Rocks"
@@ -317,6 +309,41 @@ func _scatter_rocks(body: StaticBody3D, coord: Vector2i) -> void:
 
 func _rock_rand(coord: Vector2i, i: int, k: int) -> float:
 	return _hash01(coord.x, coord.y, 100 + i * 10 + k)
+
+
+func _rock_size(coord: Vector2i, i: int) -> float:
+	return lerpf(rock_size.x, rock_size.y, pow(_rock_rand(coord, i, 2), rock_size_bias))
+
+
+## Chunk-local transform of rock i of a chunk. Its basis carries the rock's scale.
+func _rock_transform(coord: Vector2i, i: int) -> Transform3D:
+	var lx := _rock_rand(coord, i, 0) * chunk_size
+	var lz := _rock_rand(coord, i, 1) * chunk_size
+	var scl := _rock_size(coord, i) * Vector3(lerpf(0.7, 1.3, _rock_rand(coord, i, 3)), lerpf(0.45, 0.9, _rock_rand(coord, i, 4)),
+		lerpf(0.7, 1.3, _rock_rand(coord, i, 5)))
+	var rot := Basis.from_euler(Vector3(lerpf(-0.3, 0.3, _rock_rand(coord, i, 6)), _rock_rand(coord, i, 7) * TAU, 0.0))
+	var ground := sample_height(coord.x * chunk_size + lx, coord.y * chunk_size + lz)
+	return Transform3D(rot * Basis.from_scale(scl), Vector3(lx, ground + scl.y * 0.2, lz)) # ~30% buried, so they sit in the dust
+
+
+## POI: world transform of the rock at least min_size big nearest to world_pos (XZ), from its chunk and the
+## eight around it. Computed from the hash, so the chunks don't need to be loaded. null if there is none.
+func nearest_rock(world_pos: Vector3, min_size := rock_collision_size) -> Variant:
+	var center := _world_to_chunk(world_pos)
+	var best: Variant = null
+	var best_d := INF
+	for dz in range(-1, 2):
+		for dx in range(-1, 2):
+			var coord := center + Vector2i(dx, dz)
+			for i in rocks_per_chunk:
+				if _rock_size(coord, i) < min_size:
+					continue
+				var t := _rock_transform(coord, i).translated(Vector3(coord.x * chunk_size, 0.0, coord.y * chunk_size))
+				var d := Vector2(t.origin.x - world_pos.x, t.origin.z - world_pos.z).length_squared()
+				if d < best_d:
+					best_d = d
+					best = t
+	return best
 
 
 ## Smooth-shaded grid mesh with per-vertex colors (shared vertices, so colors and normals blend across quads).

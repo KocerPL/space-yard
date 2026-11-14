@@ -3,6 +3,9 @@
 [ext_resource type="PackedScene" uid="uid://bo2wg8t1btmw0" path="res://prefabs/terrain.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://whaa2icvrmkm" path="res://prefabs/rover.tscn" id="2_rover"]
 [ext_resource type="Script" uid="uid://c14chhwt2txll" path="res://scripts/orbit_camera.gd" id="3_orbit"]
+[ext_resource type="Script" path="res://scripts/poi.gd" id="4_poi"]
+[ext_resource type="Script" path="res://scripts/UI/compass.gd" id="5_compass"]
+[ext_resource type="FontFile" uid="uid://c44j3jtbdoew1" path="res://assets/fonts/Nasalization Rg.otf" id="6_font"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
 sky_top_color = Color(0.55, 0.42, 0.3, 1)
@@ -36,6 +39,31 @@ environment = SubResource("env")
 [node name="Terrain" parent="." unique_id=270482390 instance=ExtResource("1")]
 
 [node name="Rover" parent="." unique_id=1640919715 instance=ExtResource("2_rover")]
+
+[node name="RockPoi" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -20)
+script = ExtResource("4_poi")
+kind = 1
+
+[node name="LocationPoi" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, -90)
+script = ExtResource("4_poi")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="Compass" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -260.0
+offset_top = 12.0
+offset_right = 260.0
+offset_bottom = 52.0
+grow_horizontal = 2
+mouse_filter = 2
+script = ExtResource("5_compass")
+font = ExtResource("6_font")
 
 [node name="CameraRig" type="Node3D" parent="." unique_id=388476692 node_paths=PackedStringArray("target")]
 physics_interpolation_mode = 2
