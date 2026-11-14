@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://bo2wg8t1btmw0" path="res://prefabs/terrain.tscn" id="1"]
 [ext_resource type="PackedScene" uid="uid://whaa2icvrmkm" path="res://prefabs/rover.tscn" id="2_rover"]
 [ext_resource type="Script" uid="uid://c14chhwt2txll" path="res://scripts/orbit_camera.gd" id="3_orbit"]
+[ext_resource type="Script" uid="uid://s1r0ade7bsbd" path="res://scripts/Events/sandstorm.gd" id="4_ltp6j"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
 sky_top_color = Color(0.55, 0.42, 0.3, 1)
@@ -54,3 +55,6 @@ transform = Transform3D(0.8660254, -0.3535534, 0.3535534, 0, 0.7071068, 0.707106
 light_color = Color(1, 0.93, 0.85, 1)
 light_energy = 0.9
 shadow_enabled = true
+
+[node name="Sandstorm" type="Node" parent="." unique_id=719969779]
+script = ExtResource("4_ltp6j")
