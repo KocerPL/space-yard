@@ -24,6 +24,8 @@ Godot 4.7 (Forward+, Jolt Physics), GDScript only, no C#. It's a Mars rover sand
 - `scenes/mainmenu.tscn` is the title menu (Play, authors, links, exit). In the sandbox, ESC opens `scenes/UI/game_menu.tscn` (resume, options, main menu, quit).
 - `Sandstorm` (`scripts/Events/sandstorm.gd`) starts when the mission plays `Transmission 06`: fog, darkness and dust ramp up over `ramp_up`, and the rover is locked (`is_stopped`) while `intensity >= lock_at`. With `clears = false` (the default, since the mission ends in the storm) it stays at `peak`. With `true` it holds and then fades. Its `Mission` is optional, since `test_mission` replaces it.
 - `analyze_area.gd` (press E to analyze a nearby body in group `Analyzis`) is only wired up in `scenes/analysis-test.tscn`, not on the sandbox rover.
+- The arm is the rover's `Arm` node (`scripts/rover_arm.gd`). The model has no arm joints: the whole arm is the `tex_arm` surface of `Model/Body`. On ready, `RoverArm` cuts it by connected parts into the mount (stays on the body), the upper arm and the turret, and adds a forearm cylinder that the folded model doesn't show. The joint positions (`SHOULDER`, `ELBOW`, `WRIST`, `TIP`) were measured on the GLB, so re-measure them if the model is re-exported. `reach(point)` unfolds it with two-bone IK, elbow up, and never towards the back. `stow()` folds it. Pressing E (raw key, like the drive keys) reaches for the ground 1 m ahead, holds for `hold_time` and folds back.
+- Packed arrays (`PackedVector3Array` etc.) are shared by reference. `duplicate()` one before changing it if it came out of `surface_get_arrays()` and gets reused.
 
 ## Commands
 
