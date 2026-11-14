@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="space-yard"
-run/main_scene="uid://bavo1dw23o2p1"
+run/main_scene="uid://ccbc2yi7hoodo"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 
