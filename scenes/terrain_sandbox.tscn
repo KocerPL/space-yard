@@ -176,7 +176,6 @@ visibility_aabb = AABB(-10, -5, -10, 40, 16, 40)
 process_material = SubResource("ParticleProcessMaterial_qviwv")
 draw_pass_1 = SubResource("QuadMesh_x35my")
 
-[node name="Mission" type="Node" parent="." unique_id=1324467197 node_paths=PackedStringArray("rover", "dialog")]
 [node name="Mission" type="Node" parent="." unique_id=425669336 node_paths=PackedStringArray("rover", "dialog")]
 script = ExtResource("8_mission")
 rover = NodePath("../Rover")
