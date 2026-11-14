@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://b1xqqbilegb6"]
+
+[ext_resource type="Script" uid="uid://dgvvgondo1vcb" path="res://scripts/UI/dialog_box.gd" id="1_bikte"]
+
+[node name="DialogBox" type="Control" unique_id=1684674770]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -352.0
+offset_bottom = -348.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_bikte")
+text_file = "res://assets/dialogs.json"
+
+[node name="Panel" type="Panel" parent="." unique_id=538183347]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Panel" unique_id=678052475]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Lorem ipsum"
+
+[node name="Label" type="Label" parent="Panel" unique_id=1954782002]
+visible = false
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
