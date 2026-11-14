@@ -6,7 +6,10 @@ func _initialize() -> void:
 	var world: Node = load("res://scenes/terrain_sandbox.tscn").instantiate()
 	world.get_node("Mission").free() # replaced by a short one below
 	root.add_child(world)
-	await process_frame
+	# The scene's first frames are slow (synchronous terrain load, shader compiles), and their long delta would run the
+	# short test timers out in one step. Let it settle before the timed part starts.
+	for i in 10:
+		await process_frame
 	var rover: Rover = world.get_node("Rover")
 	var poi: Poi = world.get_node("RockPoi")
 	var dialog: Node = world.get_node("HUD/DialogBox")

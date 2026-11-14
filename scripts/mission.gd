@@ -13,6 +13,10 @@ signal reading_message
 @export var idle_after := 45.0
 ## Characters per second, for how long text without a voice clip stays up.
 @export var read_speed := 15.0
+## Scene to switch to once the last event in the sequence has played. Empty keeps the current scene.
+@export_file("*.tscn") var end_scene := ""
+## Seconds after the last event before switching to end_scene.
+@export var end_delay := 5.0
 
 var _events: Array[MissionEvent] = []
 var _idle: Array[MissionEvent] = []
@@ -80,4 +84,8 @@ func _play(e: MissionEvent) -> void:
 			reading_message.emit();
 			await get_tree().create_timer(length * line.length() / maxi(chars, 1)).timeout
 			dialog.next_line()
+	if not e.idle and _next >= _events.size() and end_scene: # the mission is over; _process stays idle from here
+		await get_tree().create_timer(end_delay).timeout
+		get_tree().change_scene_to_file(end_scene)
+		return
 	_busy = false

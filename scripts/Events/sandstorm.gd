@@ -11,11 +11,13 @@ extends Node
 @export var hold := 10.0
 @export var ramp_down := 10.0 # razem 30 s
 @export var trigger_transmission := "Transmission 06"
+## If false, the storm rises to peak and stays: the mission ends in it. If true, it holds and then fades.
+@export var clears := false
 
 @onready var _world_env: WorldEnvironment = $"../WorldEnvironment"
 @onready var _sun: DirectionalLight3D = $"../DirectionalLight3D"
 @onready var _rover: Rover = $"../Rover"
-@onready var _mission: Mission = $"../Mission"
+@onready var _mission: Mission = get_node_or_null("../Mission") # optional: tests swap the mission out
 @onready var _dust_follow: Node3D = $DustFollow
 @onready var _dust: GPUParticles3D = $DustFollow/Dust
 
@@ -25,7 +27,8 @@ func _ready() -> void:
 	if _dust:
 		_dust.emitting = false
 	_apply()
-	_mission.event_started.connect(_on_event_started)
+	if _mission:
+		_mission.event_started.connect(_on_event_started)
 
 func begin() -> void:
 	if _tween:
@@ -33,6 +36,8 @@ func begin() -> void:
 	intensity = 0.0
 	_tween = create_tween()
 	_tween.tween_property(self, "intensity", peak, ramp_up)
+	if not clears:
+		return
 	_tween.tween_interval(hold)
 	_tween.tween_property(self, "intensity", 0.0, ramp_down)
 
