@@ -1,3 +1,68 @@
-[gd_scene format=3 uid="uid://ccbc2yi7hoodo"]
+[gd_scene format=3 uid="uid://bavo1dw23o2p1"]
 
-[node name="MainMenu" type="Node2D" unique_id=1496291818]
+[ext_resource type="FontFile" uid="uid://c44j3jtbdoew1" path="res://assets/fonts/Nasalization Rg.otf" id="1_5mbse"]
+[ext_resource type="Script" uid="uid://w5q8qoprfe8g" path="res://scripts/stars.gd" id="1_r3g3c"]
+[ext_resource type="PackedScene" uid="uid://dfnsa415oc33h" path="res://scenes/MenuButton.tscn" id="2_natt5"]
+[ext_resource type="PackedScene" uid="uid://c3tvw73htrfb2" path="res://scenes/RotatingMars.tscn" id="4_3vvtq"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4h3mk"]
+font = ExtResource("1_5mbse")
+font_size = 100
+
+[node name="MainMenu" type="Control" unique_id=1814871825]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="ColorRect" parent="." unique_id=286278575]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.012617188, 0.012617188, 0.012617188, 1)
+
+[node name="Stars" type="Control" parent="." unique_id=987219235]
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("1_r3g3c")
+
+[node name="Title" type="Label" parent="." unique_id=178877596]
+layout_mode = 0
+offset_left = 59.0
+offset_top = 21.0
+offset_right = 799.0
+offset_bottom = 188.0
+text = "SPACE YARD"
+label_settings = SubResource("LabelSettings_4h3mk")
+
+[node name="StartButton" parent="." unique_id=1729503349 instance=ExtResource("2_natt5")]
+layout_mode = 0
+offset_left = 59.0
+offset_top = 245.0
+offset_right = 224.0
+offset_bottom = 296.0
+
+[node name="ExitButton" parent="." unique_id=1835697270 instance=ExtResource("2_natt5")]
+layout_mode = 0
+offset_left = 59.0
+offset_top = 500.0
+offset_right = 224.0
+offset_bottom = 551.0
+text = "EXIT"
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=529009866]
+layout_mode = 0
+offset_left = 640.0
+offset_top = 136.0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" unique_id=96804029]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+
+[node name="RotatingMars" parent="SubViewportContainer/SubViewport" unique_id=1409491612 instance=ExtResource("4_3vvtq")]
