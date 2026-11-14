@@ -6,6 +6,7 @@
 [ext_resource type="CompressedCubemap" uid="uid://difa3n7uyjscf" path="res://assets/img/sky.png" id="2_o4oa1"]
 [ext_resource type="PackedScene" uid="uid://whaa2icvrmkm" path="res://prefabs/rover.tscn" id="2_rover"]
 [ext_resource type="Script" uid="uid://c14chhwt2txll" path="res://scripts/orbit_camera.gd" id="3_orbit"]
+[ext_resource type="Script" uid="uid://s1r0ade7bsbd" path="res://scripts/Events/sandstorm.gd" id="4_ltp6j"]
 [ext_resource type="Script" uid="uid://b4i3djr6o2fkm" path="res://scripts/poi.gd" id="4_poi"]
 [ext_resource type="Script" uid="uid://dlqmbqftpyehi" path="res://scripts/UI/compass.gd" id="5_compass"]
 [ext_resource type="Script" uid="uid://c75ugalne25t6" path="res://scripts/UI/hud.gd" id="6_bpst7"]
@@ -25,10 +26,14 @@
 [ext_resource type="AudioStream" uid="uid://cidvcu0ffvynd" path="res://assets/audio/sy.Trans_4.wav" id="a_trans_4"]
 [ext_resource type="AudioStream" uid="uid://is4msorx2mwr" path="res://assets/audio/sy.Trans_5.wav" id="a_trans_5"]
 [ext_resource type="AudioStream" uid="uid://dqneqfmtnqqvr" path="res://assets/audio/sy.Trans_6.wav" id="a_trans_6"]
+[ext_resource type="Texture2D" uid="uid://5tlifylu847i" path="res://assets/img/dust_soft.png" id="tex_dust"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ufshk"]
 shader = ExtResource("1_o4oa1")
 shader_parameter/sky_cubemap = ExtResource("2_o4oa1")
+shader_parameter/brightness = 1.0
+shader_parameter/dust = 0.0
+shader_parameter/dust_color = Vector3(0.12, 0.08, 0.05)
 
 [sub_resource type="Sky" id="sky"]
 sky_material = SubResource("ShaderMaterial_ufshk")
@@ -48,12 +53,38 @@ fog_sky_affect = 0.0
 fog_depth_begin = 25.0
 fog_depth_end = 62.0
 
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_qviwv"]
+emission_shape = 3
+emission_box_extents = Vector3(12, 5, 12)
+direction = Vector3(1, 0.1, 0.3)
+spread = 25.941
+initial_velocity_min = 3.0
+initial_velocity_max = 8.0
+gravity = Vector3(0, -0.2, 0)
+scale_min = 0.5
+scale_max = 1.1999999
+color = Color(0.55, 0.4, 0.28, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_do41l"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(0.55, 0.4, 0.28, 0.4)
+albedo_texture = ExtResource("tex_dust")
+texture_filter = 1
+billboard_mode = 3
+particles_anim_h_frames = 1
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="QuadMesh" id="QuadMesh_x35my"]
+material = SubResource("StandardMaterial3D_do41l")
+size = Vector2(0.04, 0.04)
+
 [sub_resource type="AudioStreamPlaylist" id="intro_voice"]
 loop = false
 fade_time = 0.0
 stream_count = 2
 stream_0 = ExtResource("a_prologue_1")
-stream_1 = ExtResource("a_prologue_2")
 
 [node name="Node3D" type="Node3D" unique_id=1735938896]
 
@@ -138,6 +169,20 @@ transform = Transform3D(-4.371139e-08, -0.34202012, 0.9396926, 0, 0.9396926, 0.3
 light_energy = 0.9
 shadow_enabled = true
 
+[node name="Sandstorm" type="Node" parent="." unique_id=719969779]
+script = ExtResource("4_ltp6j")
+
+[node name="DustFollow" type="Node3D" parent="Sandstorm" unique_id=936108869]
+
+[node name="Dust" type="GPUParticles3D" parent="Sandstorm/DustFollow" unique_id=1144172713]
+emitting = false
+amount = 1200
+lifetime = 2.0
+randomness = 0.4
+visibility_aabb = AABB(-10, -5, -10, 40, 16, 40)
+process_material = SubResource("ParticleProcessMaterial_qviwv")
+draw_pass_1 = SubResource("QuadMesh_x35my")
+
 [node name="Mission" type="Node" parent="." unique_id=425669336 node_paths=PackedStringArray("rover", "dialog")]
 script = ExtResource("8_mission")
 rover = NodePath("../Rover")
@@ -149,13 +194,19 @@ transmission = "Intro"
 voice = SubResource("intro_voice")
 delay = 3.5
 
-[node name="Transmission01" type="Node" parent="Mission" unique_id=1845931336]
+[node name="Boot" type="Node" parent="Mission" unique_id=1298542275]
+script = ExtResource("9_event")
+transmission = "BOOT_SEQUENCE"
+voice = ExtResource("a_prologue_2")
+delay = 5.0
+
+[node name="Transmission01" type="Node" parent="Mission" unique_id=846545651]
 script = ExtResource("9_event")
 transmission = "Transmission 01"
 voice = ExtResource("a_trans_1")
 delay = 4.0
 
-[node name="Transmission02" type="Node" parent="Mission" unique_id=1475435328]
+[node name="Transmission02" type="Node" parent="Mission" unique_id=494907061]
 script = ExtResource("9_event")
 transmission = "Transmission 02"
 voice = ExtResource("a_trans_2")
