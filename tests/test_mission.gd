@@ -28,7 +28,26 @@ func _initialize() -> void:
 	at_poi.poi = poi
 	var idle := _event("Idle 01", beep, 0.0)
 	idle.idle = true
-	for e in [intro, at_poi, idle]:
+	var crater: Poi = world.get_node("CraterPoi")
+	var prompt := Label.new()
+	world.add_child(prompt)
+	var sample := Label.new()
+	sample.hide()
+	world.add_child(sample)
+	var analyzing := Label.new()
+	analyzing.hide()
+	world.add_child(analyzing)
+	mission.prompt = prompt
+	mission.analyzing = analyzing
+	mission.analyze_time = 0.2
+	var analysis: Array[String] = []
+	mission.analysis_started.connect(func(e: MissionEvent) -> void: analysis.append("started " + e.transmission))
+	mission.analysis_finished.connect(func(e: MissionEvent) -> void: analysis.append("finished " + e.transmission))
+	var analyzed := _event("Transmission 03", beep, 0.0)
+	analyzed.poi = crater
+	analyzed.analyze = true
+	analyzed.sample = sample
+	for e in [intro, at_poi, analyzed, idle]:
 		mission.add_child(e)
 	var started: Array[String] = []
 	mission.event_started.connect(func(e: MissionEvent) -> void: started.append(e.transmission))
@@ -51,8 +70,38 @@ func _initialize() -> void:
 	await create_timer(0.4).timeout
 	assert(started.back() == "Transmission 01", "reaching the POI plays its transmission: %s" % [started])
 	assert(not poi.visible, "and hides the reached POI")
+
+	mission.idle_after = 100.0 # keep idle transmissions out of the analysis checks
+	await create_timer(0.2).timeout # Transmission 01's beep ends
+	p = crater.global_position + Vector3(0, 0, 2)
+	rover.global_position = Vector3(p.x, TerrainGenerator.instance.sample_height(p.x, p.z) + 0.5, p.z)
+	await create_timer(0.3).timeout
+	assert(prompt.visible, "an analyze event's POI shows the prompt")
+	assert("Transmission 03" not in started, "and waits for E: %s" % [started])
+	_key_e(true)
+	await process_frame
+	await process_frame
+	_key_e(false)
+	assert(rover.is_stopped, "E stops the rover to analyze")
+	assert(not prompt.visible, "and hides the prompt")
+	assert(analyzing.visible, "the analyzing label shows during the analysis")
+	assert(analysis == ["started Transmission 03"], "analysis_started fires for the arm animation: %s" % [analysis])
+	assert("Transmission 03" not in started, "the transmission waits for the analysis")
+	await create_timer(0.35).timeout
+	assert(started.back() == "Transmission 03", "the analysis ends with the transmission: %s" % [started])
+	assert(sample.visible, "and shows the sample")
+	assert(not rover.is_stopped, "and frees the rover")
+	assert(not analyzing.visible, "and hides the analyzing label")
+	assert(analysis.back() == "finished Transmission 03", "analysis_finished fires: %s" % [analysis])
 	print("mission OK")
 	quit()
+
+
+func _key_e(pressed: bool) -> void:
+	var k := InputEventKey.new()
+	k.physical_keycode = KEY_E
+	k.pressed = pressed
+	Input.parse_input_event(k)
 
 
 func _event(key: String, voice: AudioStream, delay: float) -> MissionEvent:
