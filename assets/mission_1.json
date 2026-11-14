@@ -1,0 +1,52 @@
+{
+	"Intro": [
+		"Built to last 90 days.",
+		"Destined to survive for 15 years.",
+		"In January 2004, the Opportunity rover landed in Meridiani Planum. Its mission: to read the rocks and find the lost waters of Mars.",
+		"Long before the dust claimed it... this was Day One."
+	],
+	
+	"Transmission 01": [
+		"JPL Control to Opportunity. Telemetry looks good. You survived the bounce and arrived in one piece, Oppy. We are officially beginning your surface operations.",
+		"Your primary directive is to examine the local Martian bedrock. We need to find out if liquid water really flowed here in the ancient past. Roll out when ready."
+	],
+	
+	"Transmission 02": [
+		"We're seeing some interesting outcroppings just ahead of your position.",
+		"Drive up to that rock formation and deploy your robotic arm. We need the Alpha Particle X-ray Spectrometer to tell us exactly what this soil is made of."
+	],
+	
+	"Transmission 03": [
+		"Data received. Outstanding work, Oppy. The instruments are picking up strong signatures of hematite in those small, round rocks. We're calling them 'blueberries'.",
+		"On Earth, that mineral usually forms in liquid water. Keep pushing forward, we need to gather a larger sample size to be sure."
+	],
+	
+	"Transmission 04": [
+		"Opportunity, navigation shows a massive crater on your horizon—Eagle Crater. The exposed layers of rock down there are like a history book of the Martian climate. Carefully navigate the rim and find a safe path down to the bedrock."
+	],
+	
+	"Transmission 05": [
+		"Spectroscopy is confirmed. We are looking at cross-bedded rocks, definitively shaped by flowing currents.",
+		"You did it, Opportunity. You just proved that Meridiani Planum was once a shallow, salty sea. Take a moment to capture the panorama. History is being made today."
+	],
+	
+	"Transmission 06": [
+		"Opportunity, atmospheric sensors are picking up a massive spike in opacity. A global dust storm is moving in fast. Solar generation is dropping.",
+		"Find a safe spot to park and initiate deep sleep mode. We will be waiting for your signal when the skies clear. Good luck, old friend."
+	],
+	
+	"Idle 01": [
+		"Opportunity, JPL. Telemetry shows your drive motors have been idle for a while.",
+		"We're running a quick diagnostic... everything looks green on our end. Just let us know when you're ready to get back on the move."
+	],
+	
+	"Idle 02": [
+		"JPL to Oppy. We see you've stopped moving. Just taking in the view, huh? It's a beautiful horizon, we can't blame you.",
+		"But we still have a lot of ground to cover. Roll out when ready."
+	],
+	
+	"Idle 03": [
+		"Opportunity, please verify status. We're seeing zero movement on the grid. Watch out for those sand drifts, we don't want you getting stuck.",
+		"Send us a ping and initiate a drive sequence when you can."
+	]
+}
