@@ -16,6 +16,7 @@ Godot 4.7 (Forward+, Jolt Physics), GDScript only, no C#. It's a Mars rover sand
 - Voice clips are `assets/audio/sy.*.wav`, imported with `edit/normalize=true` because the recordings are very quiet (peaks around -20 dB). The intro is `Prologue_1` then `Prologue_2`, played back to back from an `AudioStreamPlaylist` (`fade_time = 0`) in the sandbox. `Trans_N` is `Transmission 0N` and `Idle_N` is `Idle 0N`. New clips need normalize turned on in their `.import` file.
 - `CameraRig` zooms in from `intro_distance` to the spring arm's length on start.
 - The sandbox HUD has a compass bar (`scripts/UI/compass.gd`) that follows the camera's heading. North is -Z and east is +X.
+- HUD controls need `mouse_filter = 2` (IGNORE). A `Control` defaults to STOP and swallows the clicks `CameraRig` reads in `_unhandled_input`. Headless probes don't show this, because there's no GUI picking without a window.
 - Headless, `MultiMesh.get_instance_transform()` reads back zero (the renderer is a dummy). Tests check rocks through their colliders.
 - Physics interpolation is on (`project.godot`). Anything that follows a physics body from `_process` must read `get_global_transform_interpolated()` and set `physics_interpolation_mode = OFF` on itself, as `CameraRig` does.
 - A new `class_name` is unknown to `-s` scripts until the class cache is refreshed: `timeout -s KILL 120 godot --headless --import < /dev/null`.

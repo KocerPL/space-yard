@@ -7,7 +7,7 @@ var selected_text = []
 var in_progress = false
 
 @onready var background = $Panel
-@onready var text_label: RichTextLabel = $Panel/RichTextLabel
+@onready var text_label: RichTextLabel = $Panel/MarginContainer/RichTextLabel
 
 @onready var text_timer: Timer = $Timer
 

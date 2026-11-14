@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://c1g7fm815hbt3"]
 
 [ext_resource type="PackedScene" uid="uid://bo2wg8t1btmw0" path="res://prefabs/terrain.tscn" id="1"]
+[ext_resource type="PackedScene" uid="uid://cq83q7xpp664l" path="res://scenes/UI/telemetry.tscn" id="1_ltp6j"]
 [ext_resource type="Shader" uid="uid://cs4xfmoaapth3" path="res://assets/shaders/terrain_sandbox.gdshader" id="1_o4oa1"]
 [ext_resource type="CompressedCubemap" uid="uid://difa3n7uyjscf" path="res://assets/img/sky.png" id="2_o4oa1"]
 [ext_resource type="PackedScene" uid="uid://whaa2icvrmkm" path="res://prefabs/rover.tscn" id="2_rover"]
@@ -80,7 +81,7 @@ size = Vector2(0.04, 0.04)
 [sub_resource type="AudioStreamPlaylist" id="intro_voice"]
 loop = false
 fade_time = 0.0
-stream_count = 1
+stream_count = 2
 stream_0 = ExtResource("a_prologue_1")
 
 [node name="Node3D" type="Node3D" unique_id=1735938896]
@@ -92,18 +93,18 @@ environment = SubResource("env")
 
 [node name="Rover" parent="." unique_id=1640919715 instance=ExtResource("2_rover")]
 
-[node name="RockPoi" type="Area3D" parent="." unique_id=1371078716]
+[node name="RockPoi" type="Area3D" parent="." unique_id=327002214]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -20)
 script = ExtResource("4_poi")
 kind = 1
 
-[node name="CraterPoi" type="Area3D" parent="." unique_id=1600563662]
+[node name="CraterPoi" type="Area3D" parent="." unique_id=1757272324]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.93, 0, -64.37)
 script = ExtResource("4_poi")
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=19628198]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1425873531]
 
-[node name="Compass" type="Control" parent="HUD" unique_id=874090918]
+[node name="Compass" type="Control" parent="HUD" unique_id=122791611]
 layout_mode = 3
 anchors_preset = 5
 anchor_left = 0.5
@@ -117,7 +118,7 @@ mouse_filter = 2
 script = ExtResource("5_compass")
 font = ExtResource("6_font")
 
-[node name="DialogBox" parent="HUD" unique_id=535601037 instance=ExtResource("7_dialog")]
+[node name="DialogBox" parent="HUD" unique_id=907979594 instance=ExtResource("7_dialog")]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -129,6 +130,20 @@ offset_bottom = -20.0
 grow_vertical = 0
 mouse_filter = 2
 text_file = "res://assets/mission_1.json"
+
+[node name="Telemetry" parent="HUD" unique_id=731554939 instance=ExtResource("1_ltp6j")]
+
+[node name="BlueberriesLabel" parent="HUD/Telemetry/PanelContainer/MarginContainer/VBoxContainer/FoundSamples" parent_id_path=PackedInt32Array(731554939, 1011168607) index="0" unique_id=313963310]
+visible = false
+
+[node name="MartianRockLabel" parent="HUD/Telemetry/PanelContainer/MarginContainer/VBoxContainer/FoundSamples" parent_id_path=PackedInt32Array(731554939, 1011168607) index="1" unique_id=1652450722]
+visible = false
+
+[node name="CraterSoilLabel" parent="HUD/Telemetry/PanelContainer/MarginContainer/VBoxContainer/FoundSamples" parent_id_path=PackedInt32Array(731554939, 1011168607) index="2" unique_id=1914255375]
+visible = false
+
+[node name="CollectSampleLabel" parent="HUD/Telemetry/PanelContainer/MarginContainer/VBoxContainer/InteractionsLabels" parent_id_path=PackedInt32Array(731554939, 338422783) index="0" unique_id=980223411]
+visible = false
 
 [node name="CameraRig" type="Node3D" parent="." unique_id=388476692 node_paths=PackedStringArray("target")]
 physics_interpolation_mode = 2
@@ -162,11 +177,12 @@ process_material = SubResource("ParticleProcessMaterial_qviwv")
 draw_pass_1 = SubResource("QuadMesh_x35my")
 
 [node name="Mission" type="Node" parent="." unique_id=1324467197 node_paths=PackedStringArray("rover", "dialog")]
+[node name="Mission" type="Node" parent="." unique_id=425669336 node_paths=PackedStringArray("rover", "dialog")]
 script = ExtResource("8_mission")
 rover = NodePath("../Rover")
 dialog = NodePath("../HUD/DialogBox")
 
-[node name="Intro" type="Node" parent="Mission" unique_id=847311786]
+[node name="Intro" type="Node" parent="Mission" unique_id=704131812]
 script = ExtResource("9_event")
 transmission = "Intro"
 voice = SubResource("intro_voice")
@@ -190,44 +206,48 @@ transmission = "Transmission 02"
 voice = ExtResource("a_trans_2")
 delay = 12.0
 
-[node name="Transmission03" type="Node" parent="Mission" unique_id=1283338324 node_paths=PackedStringArray("poi")]
+[node name="Transmission03" type="Node" parent="Mission" unique_id=1020926475 node_paths=PackedStringArray("poi")]
 script = ExtResource("9_event")
 transmission = "Transmission 03"
 voice = ExtResource("a_trans_3")
 poi = NodePath("../../RockPoi")
 
-[node name="Transmission04" type="Node" parent="Mission" unique_id=1366681633]
+[node name="Transmission04" type="Node" parent="Mission" unique_id=745135847]
 script = ExtResource("9_event")
 transmission = "Transmission 04"
 voice = ExtResource("a_trans_4")
 delay = 10.0
 
-[node name="Transmission05" type="Node" parent="Mission" unique_id=477427644 node_paths=PackedStringArray("poi")]
+[node name="Transmission05" type="Node" parent="Mission" unique_id=1100681950 node_paths=PackedStringArray("poi")]
 script = ExtResource("9_event")
 transmission = "Transmission 05"
 voice = ExtResource("a_trans_5")
 poi = NodePath("../../CraterPoi")
 
-[node name="Transmission06" type="Node" parent="Mission" unique_id=1827662257]
+[node name="Transmission06" type="Node" parent="Mission" unique_id=1291613256]
 script = ExtResource("9_event")
 transmission = "Transmission 06"
 voice = ExtResource("a_trans_6")
 delay = 45.0
 
-[node name="Idle01" type="Node" parent="Mission" unique_id=2006449259]
+[node name="Idle01" type="Node" parent="Mission" unique_id=15841379]
 script = ExtResource("9_event")
 transmission = "Idle 01"
 voice = ExtResource("a_idle_1")
 idle = true
 
-[node name="Idle02" type="Node" parent="Mission" unique_id=185857148]
+[node name="Idle02" type="Node" parent="Mission" unique_id=277436282]
 script = ExtResource("9_event")
 transmission = "Idle 02"
 voice = ExtResource("a_idle_2")
 idle = true
 
-[node name="Idle03" type="Node" parent="Mission" unique_id=198249032]
+[node name="Idle03" type="Node" parent="Mission" unique_id=2048364315]
 script = ExtResource("9_event")
 transmission = "Idle 03"
 voice = ExtResource("a_idle_3")
 idle = true
+
+[connection signal="reading_message" from="Mission" to="HUD/Telemetry" method="_on_mission_reading_message"]
+
+[editable path="HUD/Telemetry"]
