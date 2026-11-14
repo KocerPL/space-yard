@@ -5,8 +5,18 @@
 
 [node name="RotatingMars" type="Node3D" unique_id=1409491612]
 
-[node name="24881_Mars_1_6792" parent="." unique_id=1223039161 instance=ExtResource("1_yjown")]
+[node name="transformMars" type="Node3D" parent="." unique_id=814621035]
+transform = Transform3D(0.96525276, -0.26131806, 0, 0.24779005, 0.9152832, -0.31757957, 0.082989275, 0.30654454, 0.94823164, 0, 0, 0)
+
+[node name="Mars" parent="transformMars" unique_id=1223039161 instance=ExtResource("1_yjown")]
 script = ExtResource("2_63u52")
 
 [node name="Camera3D" type="Camera3D" parent="." unique_id=2074471020]
 transform = Transform3D(0.9659259, 0, -0.25881907, 0, 1, 0, 0.25881907, 0, 0.9659258, -486.11072, 337.44666, 412.9948)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." unique_id=919863512]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -578, 357.713, 273)
+light_color = Color(0.94509804, 0.96862745, 1, 1)
+light_energy = 16.0
+omni_range = 1753.649
+omni_attenuation = 0.4
