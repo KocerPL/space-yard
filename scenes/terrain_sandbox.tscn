@@ -6,6 +6,18 @@
 [ext_resource type="Script" path="res://scripts/poi.gd" id="4_poi"]
 [ext_resource type="Script" path="res://scripts/UI/compass.gd" id="5_compass"]
 [ext_resource type="FontFile" uid="uid://c44j3jtbdoew1" path="res://assets/fonts/Nasalization Rg.otf" id="6_font"]
+[ext_resource type="PackedScene" uid="uid://b1xqqbilegb6" path="res://scenes/UI/dialog_box.tscn" id="7_dialog"]
+[ext_resource type="Script" path="res://scripts/mission.gd" id="8_mission"]
+[ext_resource type="Script" path="res://scripts/mission_event.gd" id="9_event"]
+[ext_resource type="AudioStream" uid="uid://b8oopmvhkycd4" path="res://assets/audio/sy.Initial_1.wav" id="a_initial_1"]
+[ext_resource type="AudioStream" uid="uid://bficmfqrf04d5" path="res://assets/audio/sy.Initial_2.wav" id="a_initial_2"]
+[ext_resource type="AudioStream" uid="uid://bcekwvavjo6ej" path="res://assets/audio/sy.Trans_1.wav" id="a_trans_1"]
+[ext_resource type="AudioStream" uid="uid://cidvcu0ffvynd" path="res://assets/audio/sy.Trans_2.wav" id="a_trans_2"]
+[ext_resource type="AudioStream" uid="uid://xx7mqexydrbv" path="res://assets/audio/sy.Trans_3.wav" id="a_trans_3"]
+[ext_resource type="AudioStream" uid="uid://b0ve0rf7iavuw" path="res://assets/audio/sy.Trans_4.wav" id="a_trans_4"]
+[ext_resource type="AudioStream" uid="uid://b8v2lgilcgm8v" path="res://assets/audio/sy.Idle_1.wav" id="a_idle_1"]
+[ext_resource type="AudioStream" uid="uid://digwk0865m72s" path="res://assets/audio/sy.Idle_2.wav" id="a_idle_2"]
+[ext_resource type="AudioStream" uid="uid://clag0cdk7n67a" path="res://assets/audio/sy.Idle_3.wav" id="a_idle_3"]
 
 [sub_resource type="ProceduralSkyMaterial" id="sky_mat"]
 sky_top_color = Color(0.55, 0.42, 0.3, 1)
@@ -31,6 +43,13 @@ fog_sky_affect = 0.0
 fog_depth_begin = 25.0
 fog_depth_end = 62.0
 
+[sub_resource type="AudioStreamPlaylist" id="intro_voice"]
+fade_time = 0.0
+loop = false
+stream_count = 2
+stream_0 = ExtResource("a_initial_1")
+stream_1 = ExtResource("a_initial_2")
+
 [node name="Node3D" type="Node3D" unique_id=1735938896]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=383264152]
@@ -45,8 +64,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6, 0, -20)
 script = ExtResource("4_poi")
 kind = 1
 
-[node name="LocationPoi" type="Area3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -40, 0, -90)
+[node name="CraterPoi" type="Area3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.93, 0, -64.37)
 script = ExtResource("4_poi")
 
 [node name="HUD" type="CanvasLayer" parent="."]
@@ -65,6 +84,20 @@ mouse_filter = 2
 script = ExtResource("5_compass")
 font = ExtResource("6_font")
 
+[node name="DialogBox" parent="HUD" instance=ExtResource("7_dialog")]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = -170.0
+offset_right = 400.0
+offset_bottom = -20.0
+grow_vertical = 0
+mouse_filter = 2
+text_file = "res://assets/mission_1.json"
+
 [node name="CameraRig" type="Node3D" parent="." unique_id=388476692 node_paths=PackedStringArray("target")]
 physics_interpolation_mode = 2
 transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.3420201, 0, -0.3420201, 0.9396926, 0, 0, 0)
@@ -82,3 +115,66 @@ transform = Transform3D(0.8660254, -0.3535534, 0.3535534, 0, 0.7071068, 0.707106
 light_color = Color(1, 0.93, 0.85, 1)
 light_energy = 0.9
 shadow_enabled = true
+
+[node name="Mission" type="Node" parent="." node_paths=PackedStringArray("rover", "dialog")]
+script = ExtResource("8_mission")
+rover = NodePath("../Rover")
+dialog = NodePath("../HUD/DialogBox")
+
+[node name="Intro" type="Node" parent="Mission"]
+script = ExtResource("9_event")
+transmission = "Intro"
+voice = SubResource("intro_voice")
+delay = 3.5
+
+[node name="Transmission01" type="Node" parent="Mission"]
+script = ExtResource("9_event")
+transmission = "Transmission 01"
+voice = ExtResource("a_trans_1")
+delay = 4.0
+
+[node name="Transmission02" type="Node" parent="Mission"]
+script = ExtResource("9_event")
+transmission = "Transmission 02"
+voice = ExtResource("a_trans_2")
+delay = 12.0
+
+[node name="Transmission03" type="Node" parent="Mission" node_paths=PackedStringArray("poi")]
+script = ExtResource("9_event")
+transmission = "Transmission 03"
+voice = ExtResource("a_trans_3")
+poi = NodePath("../../RockPoi")
+
+[node name="Transmission04" type="Node" parent="Mission"]
+script = ExtResource("9_event")
+transmission = "Transmission 04"
+voice = ExtResource("a_trans_4")
+delay = 10.0
+
+[node name="Transmission05" type="Node" parent="Mission" node_paths=PackedStringArray("poi")]
+script = ExtResource("9_event")
+transmission = "Transmission 05"
+poi = NodePath("../../CraterPoi")
+
+[node name="Transmission06" type="Node" parent="Mission"]
+script = ExtResource("9_event")
+transmission = "Transmission 06"
+delay = 45.0
+
+[node name="Idle01" type="Node" parent="Mission"]
+script = ExtResource("9_event")
+transmission = "Idle 01"
+voice = ExtResource("a_idle_1")
+idle = true
+
+[node name="Idle02" type="Node" parent="Mission"]
+script = ExtResource("9_event")
+transmission = "Idle 02"
+voice = ExtResource("a_idle_2")
+idle = true
+
+[node name="Idle03" type="Node" parent="Mission"]
+script = ExtResource("9_event")
+transmission = "Idle 03"
+voice = ExtResource("a_idle_3")
+idle = true

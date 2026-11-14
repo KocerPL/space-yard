@@ -6,6 +6,9 @@ extends Node3D
 @export var height := 1.0
 @export var sensitivity := 0.005
 @export var pitch_limits := Vector2(-80.0, 10.0) # degrees
+## On start the camera zooms in from this far out to the spring arm's length, over intro_time seconds.
+@export var intro_distance := 30.0
+@export var intro_time := 3.0
 
 @onready var _arm: SpringArm3D = $SpringArm3D
 
@@ -13,6 +16,9 @@ extends Node3D
 func _ready() -> void:
 	if target is CollisionObject3D:
 		_arm.add_excluded_object(target.get_rid())
+	var length := _arm.spring_length
+	_arm.spring_length = intro_distance
+	create_tween().tween_property(_arm, "spring_length", length, intro_time).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 
 
 func _unhandled_input(event: InputEvent) -> void:
