@@ -54,7 +54,7 @@ static var instance: TerrainGenerator
 
 @export_group("Rocks")
 ## Rocks scattered per chunk, deterministic per seed. Most are pebbles; few are boulders.
-@export var rocks_per_chunk := 30
+@export var rocks_per_chunk := 12
 ## Smallest and largest rock size (m).
 @export var rock_size := Vector2(0.08, 1.8)
 ## Higher = more small rocks, fewer boulders (size = lerp(min, max, rand^bias)).
