@@ -1,0 +1,58 @@
+[gd_scene format=3]
+
+[sub_resource type="CylinderMesh" id="stone_mesh"]
+top_radius = 0.1
+bottom_radius = 0.28
+height = 1.6
+radial_segments = 5
+rings = 0
+
+[sub_resource type="StandardMaterial3D" id="stone_mat"]
+albedo_color = Color(0.24, 0.16, 0.12, 1)
+roughness = 1.0
+
+[sub_resource type="SphereMesh" id="core_mesh"]
+radius = 0.12
+height = 0.24
+radial_segments = 8
+rings = 4
+
+[sub_resource type="StandardMaterial3D" id="glow_mat"]
+shading_mode = 0
+albedo_color = Color(0.4, 0.95, 1, 1)
+
+[sub_resource type="CylinderMesh" id="beam_mesh"]
+top_radius = 0.3
+bottom_radius = 0.3
+height = 120.0
+radial_segments = 8
+rings = 0
+cap_top = false
+cap_bottom = false
+
+[sub_resource type="StandardMaterial3D" id="beam_mat"]
+transparency = 1
+blend_mode = 1
+cull_mode = 2
+shading_mode = 0
+disable_fog = true
+albedo_color = Color(0.3, 0.9, 1, 0.35)
+
+[node name="Waystone" type="Node3D"]
+
+[node name="Stone" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7, 0)
+mesh = SubResource("stone_mesh")
+surface_material_override/0 = SubResource("stone_mat")
+
+[node name="Core" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+cast_shadow = 0
+mesh = SubResource("core_mesh")
+surface_material_override/0 = SubResource("glow_mat")
+
+[node name="Beam" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 61.6, 0)
+cast_shadow = 0
+mesh = SubResource("beam_mesh")
+surface_material_override/0 = SubResource("beam_mat")
