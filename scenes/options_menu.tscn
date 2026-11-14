@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://c5vwudqbni41t"]
+
+[ext_resource type="Script" uid="uid://b30ioj1lts4ee" path="res://scripts/UI/options_menu.gd" id="1_hm4m4"]
+[ext_resource type="FontFile" uid="uid://c44j3jtbdoew1" path="res://assets/fonts/Nasalization Rg.otf" id="1_liyum"]
+[ext_resource type="PackedScene" uid="uid://dfnsa415oc33h" path="res://scenes/MenuButton.tscn" id="2_ijpji"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_f6xyr"]
+font = ExtResource("1_liyum")
+font_size = 50
+
+[sub_resource type="LabelSettings" id="LabelSettings_epuwg"]
+font = ExtResource("1_liyum")
+
+[node name="OptionsMenu" type="Control" unique_id=505231594]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_hm4m4")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1287882365]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=1680866575]
+layout_mode = 2
+text = "Options"
+label_settings = SubResource("LabelSettings_f6xyr")
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="VBoxContainer" unique_id=1524365556]
+layout_mode = 2
+
+[node name="Control" type="Control" parent="VBoxContainer" unique_id=1634775915]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1266550872]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/HBoxContainer" unique_id=452725469]
+layout_mode = 2
+text = "Volume"
+label_settings = SubResource("LabelSettings_epuwg")
+
+[node name="Control" type="Control" parent="VBoxContainer/HBoxContainer" unique_id=405694067]
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 2
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/HBoxContainer" unique_id=1261783310]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+tick_count = 20
+ticks_on_borders = true
+ticks_position = 2
+
+[node name="Control2" type="Control" parent="VBoxContainer" unique_id=811717774]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="ReturnButton" parent="VBoxContainer" unique_id=1729503349 instance=ExtResource("2_ijpji")]
+layout_mode = 2
+text = "Return to menu"
+
+[connection signal="pressed" from="VBoxContainer/ReturnButton" to="." method="_on_return_button_pressed"]

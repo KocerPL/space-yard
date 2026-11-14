@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ccbc2yi7hoodo"]
 
 [ext_resource type="FontFile" uid="uid://c44j3jtbdoew1" path="res://assets/fonts/Nasalization Rg.otf" id="1_5mbse"]
-[ext_resource type="Script" uid="uid://b8o43n5n2b23s" path="res://scenes/mainmenu.gd" id="1_h73c4"]
+[ext_resource type="Script" uid="uid://b8o43n5n2b23s" path="res://scripts/UI/mainmenu.gd" id="1_h73c4"]
 [ext_resource type="PackedScene" uid="uid://dfnsa415oc33h" path="res://scenes/MenuButton.tscn" id="2_natt5"]
 [ext_resource type="PackedScene" uid="uid://d00f7m0ka7nxn" path="res://scenes/stars_background.tscn" id="2_wf3n4"]
 [ext_resource type="PackedScene" uid="uid://c3tvw73htrfb2" path="res://scenes/RotatingMars.tscn" id="4_3vvtq"]

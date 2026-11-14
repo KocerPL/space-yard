@@ -8,10 +8,12 @@
 [ext_resource type="Script" uid="uid://c14chhwt2txll" path="res://scripts/orbit_camera.gd" id="3_orbit"]
 [ext_resource type="Script" uid="uid://b4i3djr6o2fkm" path="res://scripts/poi.gd" id="4_poi"]
 [ext_resource type="Script" uid="uid://dlqmbqftpyehi" path="res://scripts/UI/compass.gd" id="5_compass"]
+[ext_resource type="Script" uid="uid://c75ugalne25t6" path="res://scripts/UI/hud.gd" id="6_bpst7"]
 [ext_resource type="FontFile" uid="uid://c44j3jtbdoew1" path="res://assets/fonts/Nasalization Rg.otf" id="6_font"]
 [ext_resource type="PackedScene" uid="uid://b1xqqbilegb6" path="res://scenes/UI/dialog_box.tscn" id="7_dialog"]
 [ext_resource type="Script" uid="uid://1sb8puvo0nkj" path="res://scripts/mission.gd" id="8_mission"]
 [ext_resource type="Script" uid="uid://bmkfbwm0oj5j0" path="res://scripts/mission_event.gd" id="9_event"]
+[ext_resource type="PackedScene" uid="uid://b8jns8abmxnfv" path="res://scenes/UI/game_menu.tscn" id="10_m47ue"]
 [ext_resource type="AudioStream" uid="uid://b8v2lgilcgm8v" path="res://assets/audio/sy.Idle_1.wav" id="a_idle_1"]
 [ext_resource type="AudioStream" uid="uid://digwk0865m72s" path="res://assets/audio/sy.Idle_2.wav" id="a_idle_2"]
 [ext_resource type="AudioStream" uid="uid://clag0cdk7n67a" path="res://assets/audio/sy.Idle_3.wav" id="a_idle_3"]
@@ -71,7 +73,9 @@ kind = 1
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 22.93, 0, -64.37)
 script = ExtResource("4_poi")
 
-[node name="HUD" type="CanvasLayer" parent="." unique_id=1425873531]
+[node name="HUD" type="CanvasLayer" parent="." unique_id=1425873531 node_paths=PackedStringArray("gameMenu")]
+script = ExtResource("6_bpst7")
+gameMenu = NodePath("GameMenu")
 
 [node name="Compass" type="Control" parent="HUD" unique_id=122791611]
 layout_mode = 3
@@ -112,6 +116,9 @@ visible = false
 visible = false
 
 [node name="CollectSampleLabel" parent="HUD/Telemetry/PanelContainer/MarginContainer/VBoxContainer/InteractionsLabels" parent_id_path=PackedInt32Array(731554939, 338422783) index="0" unique_id=980223411]
+visible = false
+
+[node name="GameMenu" parent="HUD" unique_id=1827455243 instance=ExtResource("10_m47ue")]
 visible = false
 
 [node name="CameraRig" type="Node3D" parent="." unique_id=388476692 node_paths=PackedStringArray("target")]
@@ -196,6 +203,7 @@ transmission = "Idle 03"
 voice = ExtResource("a_idle_3")
 idle = true
 
+[connection signal="resumePressed" from="HUD/GameMenu" to="HUD" method="_on_game_menu_resume_pressed"]
 [connection signal="reading_message" from="Mission" to="HUD/Telemetry" method="_on_mission_reading_message"]
 
 [editable path="HUD/Telemetry"]
