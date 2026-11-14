@@ -66,12 +66,14 @@ func _exit_tree() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	if is_stopped:
-		return
-	
-	# shortcut: raw physical keys, move to InputMap actions when rebinding or gamepad support is needed
-	var drive := float(Input.is_physical_key_pressed(KEY_W)) - float(Input.is_physical_key_pressed(KEY_S))
-	var steer := float(Input.is_physical_key_pressed(KEY_A)) - float(Input.is_physical_key_pressed(KEY_D))
+	var drive := 0.0
+	var steer := 0.0
+		
+	if not is_stopped:
+		# shortcut: raw physical keys, move to InputMap actions when rebinding or gamepad support is needed
+		drive = float(Input.is_physical_key_pressed(KEY_W)) - float(Input.is_physical_key_pressed(KEY_S))
+		steer = float(Input.is_physical_key_pressed(KEY_A)) - float(Input.is_physical_key_pressed(KEY_D))
+
 
 	_turn = move_toward(_turn, steer * turn_speed, turn_acceleration * delta)
 	rotate_y(_turn * delta)
