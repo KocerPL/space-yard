@@ -26,9 +26,12 @@ script = ExtResource("1_h73c4")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="." unique_id=529009866]
 z_index = 5
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 stretch = true
 metadata/_edit_lock_ = true
 
@@ -41,9 +44,7 @@ render_target_update_mode = 4
 [node name="RotatingMars" parent="SubViewportContainer/SubViewport" unique_id=1409491612 instance=ExtResource("4_3vvtq")]
 
 [node name="StarsBackground" parent="." unique_id=1072841081 instance=ExtResource("2_wf3n4")]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+layout_mode = 1
 
 [node name="Title" type="Label" parent="." unique_id=178877596]
 layout_mode = 0

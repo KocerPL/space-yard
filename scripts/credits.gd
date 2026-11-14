@@ -35,6 +35,7 @@ func _ready() -> void:
 	_viewport.add_child(text_vp)
 	
 	_rich_text = RichTextLabel.new()
+	_rich_text.visible = false
 	_rich_text.bbcode_enabled = true
 	_rich_text.fit_content = true
 	_rich_text.scroll_active = false
@@ -77,6 +78,7 @@ func _ready() -> void:
 
 func reset_credits() -> void:
 	_rich_text.position.y = 1496.0
+	_rich_text.visible = true
 
 func _process(delta: float) -> void:
 	if not _rich_text:
