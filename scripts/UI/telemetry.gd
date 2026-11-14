@@ -1,14 +1,24 @@
 extends Control
-## Top-left rover HUD: link speed, samples, and power. Power drains after the last voiced mission line.
+## Top-left rover HUD: link speed, samples, and power.
+## Solar tracks sandstorm intensity; battery drains after "Battery low".
 
 var kiloByteCount = 0
 @export_category("custom")
 @export var kiloByteSpeedLimit = 27
-## Mission transmission that starts the battery/solar drain.
+## Mission transmission that starts the battery drain.
 @export var power_drain_trigger := "Battery low"
-@export var power_drain_duration := 50.0
+@export var power_drain_duration := 40.0
 @export var battery_end := 0.0
 @export var solar_end := 0.0
+## Epilogue lines: TX/RX stay frozen (link is dead).
+@export var freeze_net_transmissions: PackedStringArray = [
+	"Only silence",
+	"No response",
+	"Collected data",
+	"Goodbye Oppy",
+]
+## Optional; if empty, looks up Sandstorm on the current scene.
+@export var sandstorm_path: NodePath
 
 @onready var foundSamplesLabel = $PanelContainer/MarginContainer/VBoxContainer/FoundSamplesLabel
 @onready var netSpeedLabel = $PanelContainer/MarginContainer/VBoxContainer/NetSpeedLabel
@@ -21,10 +31,18 @@ var solar := 100.0
 var _draining := false
 var _drain_t := 0.0
 var _battery_start := 100.0
-var _solar_start := 100.0
+var _link_frozen := false
+## Untyped: Sandstorm has no class_name; we only read intensity/peak.
+var _sandstorm
 
 
 func _ready() -> void:
+	if sandstorm_path:
+		_sandstorm = get_node_or_null(sandstorm_path)
+	else:
+		var scene := get_tree().current_scene
+		if scene:
+			_sandstorm = scene.get_node_or_null("Sandstorm")
 	_refresh_power_labels()
 
 
@@ -48,7 +66,12 @@ func begin_power_drain() -> void:
 	_draining = true
 	_drain_t = 0.0
 	_battery_start = battery
-	_solar_start = solar
+
+
+func _freeze_net() -> void:
+	_link_frozen = true
+	kiloByteCount = 0
+	netSpeedLabel.text = "TX: 0 kB/s\nRX: 0 kB/s"
 
 
 func _refresh_power_labels() -> void:
@@ -57,14 +80,28 @@ func _refresh_power_labels() -> void:
 
 
 func _process(delta: float) -> void:
+	var power_changed := false
+
+	if _sandstorm and is_instance_valid(_sandstorm):
+		var u_solar := clampf(_sandstorm.intensity / maxf(_sandstorm.peak, 0.001), 0.0, 1.0)
+		var next_solar: float = lerpf(100.0, solar_end, u_solar)
+		if not is_equal_approx(next_solar, solar):
+			solar = next_solar
+			power_changed = true
+
 	if _draining and power_drain_duration > 0.0:
 		_drain_t += delta
 		var u := clampf(_drain_t / power_drain_duration, 0.0, 1.0)
-		# Ease-in so the drop accelerates as the storm kills the panels.
+		# Ease-in so the drop accelerates as systems fail.
 		var eased := u * u
 		battery = lerpf(_battery_start, battery_end, eased)
-		solar = lerpf(_solar_start, solar_end, eased)
+		power_changed = true
+
+	if power_changed:
 		_refresh_power_labels()
+
+	if _link_frozen:
+		return
 
 	nextCheck -= delta
 	if nextCheck <= 0:
@@ -79,9 +116,13 @@ func _process(delta: float) -> void:
 
 
 func _on_mission_reading_message() -> void:
+	if _link_frozen:
+		return
 	on_message_receive()
 
 
 func _on_mission_event_started(event: MissionEvent) -> void:
+	if event.transmission in freeze_net_transmissions:
+		_freeze_net()
 	if event.transmission == power_drain_trigger:
 		begin_power_drain()
