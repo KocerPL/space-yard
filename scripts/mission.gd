@@ -17,6 +17,10 @@ signal reading_message
 @export_file("*.tscn") var end_scene := ""
 ## Seconds after the last event before switching to end_scene.
 @export var end_delay := 5.0
+## Full-screen ColorRect (e.g. HUD/FadeOut). Fades to black before end_scene; optional.
+@export var end_fade: ColorRect
+## How long the fade to black takes.
+@export var end_fade_time := 2.0
 
 var _events: Array[MissionEvent] = []
 var _idle: Array[MissionEvent] = []
@@ -86,6 +90,9 @@ func _play(e: MissionEvent) -> void:
 			dialog.next_line()
 	if not e.idle and _next >= _events.size() and end_scene: # the mission is over; _process stays idle from here
 		await get_tree().create_timer(end_delay).timeout
+		if end_fade and end_fade_time > 0.0:
+			end_fade.modulate.a = 0.0
+			await create_tween().tween_property(end_fade, "modulate:a", 1.0, end_fade_time).finished
 		get_tree().change_scene_to_file(end_scene)
 		return
 	_busy = false

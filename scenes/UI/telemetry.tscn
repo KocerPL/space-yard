@@ -91,5 +91,5 @@ label_settings = SubResource("LabelSettings_f6xyr")
 
 [node name="EscapeLabel" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer/InteractionsLabels" unique_id=1459992554]
 layout_mode = 2
-text = "Press [ESC] to quit"
+text = "Press [ESC] to menu"
 label_settings = SubResource("LabelSettings_f6xyr")

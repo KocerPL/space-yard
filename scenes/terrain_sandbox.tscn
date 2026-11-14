@@ -15,9 +15,11 @@
 [ext_resource type="Script" uid="uid://1sb8puvo0nkj" path="res://scripts/mission.gd" id="8_mission"]
 [ext_resource type="Script" uid="uid://bmkfbwm0oj5j0" path="res://scripts/mission_event.gd" id="9_event"]
 [ext_resource type="PackedScene" uid="uid://b8jns8abmxnfv" path="res://scenes/UI/game_menu.tscn" id="10_m47ue"]
+[ext_resource type="AudioStream" uid="uid://ccjbtobfa14pl" path="res://assets/audio/sy.Doom.mp3" id="a_doom"]
 [ext_resource type="AudioStream" uid="uid://b8v2lgilcgm8v" path="res://assets/audio/sy.Idle_1.wav" id="a_idle_1"]
 [ext_resource type="AudioStream" uid="uid://digwk0865m72s" path="res://assets/audio/sy.Idle_2.wav" id="a_idle_2"]
 [ext_resource type="AudioStream" uid="uid://clag0cdk7n67a" path="res://assets/audio/sy.Idle_3.wav" id="a_idle_3"]
+[ext_resource type="AudioStream" uid="uid://bacnqdoed530" path="res://assets/audio/sy.Mission_completed.mp3" id="a_mission_completed"]
 [ext_resource type="AudioStream" uid="uid://ccwhssc2hvoba" path="res://assets/audio/sy.Prologue_1.wav" id="a_prologue_1"]
 [ext_resource type="AudioStream" uid="uid://dwjdp8vmhwwom" path="res://assets/audio/sy.Prologue_2.wav" id="a_prologue_2"]
 [ext_resource type="AudioStream" uid="uid://b8oopmvhkycd4" path="res://assets/audio/sy.Trans_1.wav" id="a_trans_1"]
@@ -26,8 +28,6 @@
 [ext_resource type="AudioStream" uid="uid://cidvcu0ffvynd" path="res://assets/audio/sy.Trans_4.wav" id="a_trans_4"]
 [ext_resource type="AudioStream" uid="uid://is4msorx2mwr" path="res://assets/audio/sy.Trans_5.wav" id="a_trans_5"]
 [ext_resource type="AudioStream" uid="uid://dqneqfmtnqqvr" path="res://assets/audio/sy.Trans_6.wav" id="a_trans_6"]
-[ext_resource type="AudioStream" uid="uid://bacnqdoed530" path="res://assets/audio/sy.Mission_completed.mp3" id="a_mission_completed"]
-[ext_resource type="AudioStream" uid="uid://ccjbtobfa14pl" path="res://assets/audio/sy.Doom.mp3" id="a_doom"]
 [ext_resource type="Texture2D" uid="uid://5tlifylu847i" path="res://assets/img/dust_soft.png" id="tex_dust"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ufshk"]
@@ -81,12 +81,6 @@ particles_anim_loop = false
 [sub_resource type="QuadMesh" id="QuadMesh_x35my"]
 material = SubResource("StandardMaterial3D_do41l")
 size = Vector2(0.04, 0.04)
-
-[sub_resource type="AudioStreamPlaylist" id="intro_voice"]
-loop = false
-fade_time = 0.0
-stream_count = 2
-stream_0 = ExtResource("a_prologue_1")
 
 [node name="Node3D" type="Node3D" unique_id=1735938896]
 
@@ -154,6 +148,16 @@ visible = false
 [node name="GameMenu" parent="HUD" unique_id=1827455243 instance=ExtResource("10_m47ue")]
 visible = false
 
+[node name="FadeOut" type="ColorRect" parent="HUD" unique_id=435058725]
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
 [node name="CameraRig" type="Node3D" parent="." unique_id=388476692 node_paths=PackedStringArray("target")]
 physics_interpolation_mode = 2
 transform = Transform3D(1, 0, 0, 0, 0.9396926, 0.3420201, 0, -0.3420201, 0.9396926, 0, 0, 0)
@@ -185,16 +189,17 @@ visibility_aabb = AABB(-10, -5, -10, 40, 16, 40)
 process_material = SubResource("ParticleProcessMaterial_qviwv")
 draw_pass_1 = SubResource("QuadMesh_x35my")
 
-[node name="Mission" type="Node" parent="." unique_id=425669336 node_paths=PackedStringArray("rover", "dialog")]
+[node name="Mission" type="Node" parent="." unique_id=425669336 node_paths=PackedStringArray("rover", "dialog", "end_fade")]
 script = ExtResource("8_mission")
 rover = NodePath("../Rover")
 dialog = NodePath("../HUD/DialogBox")
 end_scene = "res://scenes/mainmenu.tscn"
+end_fade = NodePath("../HUD/FadeOut")
 
 [node name="Intro" type="Node" parent="Mission" unique_id=704131812]
 script = ExtResource("9_event")
 transmission = "Intro"
-voice = SubResource("intro_voice")
+voice = ExtResource("a_prologue_1")
 delay = 3.5
 
 [node name="Boot" type="Node" parent="Mission" unique_id=1298542275]
@@ -261,6 +266,18 @@ script = ExtResource("9_event")
 transmission = "Only silence"
 delay = 5.0
 
+[node name="NoResponse" type="Node" parent="Mission" unique_id=1541368196]
+script = ExtResource("9_event")
+transmission = "No response"
+
+[node name="CollectedData" type="Node" parent="Mission" unique_id=1463870563]
+script = ExtResource("9_event")
+transmission = "Collected data"
+
+[node name="GoodbyeOppy" type="Node" parent="Mission" unique_id=875608838]
+script = ExtResource("9_event")
+transmission = "Goodbye Oppy"
+
 [node name="Idle01" type="Node" parent="Mission" unique_id=15841379]
 script = ExtResource("9_event")
 transmission = "Idle 01"
@@ -281,5 +298,6 @@ idle = true
 
 [connection signal="resumePressed" from="HUD/GameMenu" to="HUD" method="_on_game_menu_resume_pressed"]
 [connection signal="reading_message" from="Mission" to="HUD/Telemetry" method="_on_mission_reading_message"]
+[connection signal="event_started" from="Mission" to="HUD/Telemetry" method="_on_mission_event_started"]
 
 [editable path="HUD/Telemetry"]
