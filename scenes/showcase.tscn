@@ -1,0 +1,48 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/showcase.gd" id="1_script"]
+[ext_resource type="FontFile" uid="uid://c44j3jtbdoew1" path="res://assets/fonts/Nasalization Rg.otf" id="2_font"]
+[ext_resource type="AudioStream" uid="uid://2hhkpte2me4x" path="res://assets/audio/showcase.mp3" id="3_voice"]
+
+[sub_resource type="LabelSettings" id="title"]
+font = ExtResource("2_font")
+font_size = 110
+shadow_size = 8
+shadow_color = Color(0, 0, 0, 0.6)
+
+[sub_resource type="LabelSettings" id="subtitle"]
+font = ExtResource("2_font")
+font_size = 30
+font_color = Color(0.92, 0.78, 0.64, 1)
+shadow_size = 6
+shadow_color = Color(0, 0, 0, 0.6)
+
+[node name="Showcase" type="Node"]
+script = ExtResource("1_script")
+
+[node name="Voiceover" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_voice")
+volume_db = 5.0
+
+[node name="Title" type="CanvasLayer" parent="."]
+
+[node name="Center" type="VBoxContainer" parent="Title"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+alignment = 1
+
+[node name="Name" type="Label" parent="Title/Center"]
+layout_mode = 2
+text = "SPACE YARD"
+label_settings = SubResource("title")
+horizontal_alignment = 1
+
+[node name="Tagline" type="Label" parent="Title/Center"]
+layout_mode = 2
+text = "In memory of Opportunity  ·  2004 – 2019"
+label_settings = SubResource("subtitle")
+horizontal_alignment = 1

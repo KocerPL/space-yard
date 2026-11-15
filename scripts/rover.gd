@@ -42,6 +42,9 @@ var _steer := PackedFloat32Array([0, 0, 0, 0, 0, 0])
 
 
 var is_stopped = false
+## When true, drive_input (x: forward, y: turn left, each -1..1) drives instead of the keys, e.g. in the showcase.
+var autopilot := false
+var drive_input := Vector2.ZERO
 
 func _ready() -> void:
 	for n in WHEELS:
@@ -69,7 +72,10 @@ func _physics_process(delta: float) -> void:
 	var drive := 0.0
 	var steer := 0.0
 		
-	if not is_stopped:
+	if autopilot and not is_stopped:
+		drive = drive_input.x
+		steer = drive_input.y
+	elif not is_stopped:
 		# shortcut: raw physical keys, move to InputMap actions when rebinding or gamepad support is needed
 		drive = float(Input.is_physical_key_pressed(KEY_W)) - float(Input.is_physical_key_pressed(KEY_S))
 		steer = float(Input.is_physical_key_pressed(KEY_A)) - float(Input.is_physical_key_pressed(KEY_D))
