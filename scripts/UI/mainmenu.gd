@@ -20,7 +20,7 @@ func _ready() -> void:
 
 
 func _on_team_memers_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://assets/img/icons/Authors.tscn")
+	get_tree().change_scene_to_file("res://scenes/UI/Authors.tscn")
 
 
 func _on_github_button_pressed() -> void:

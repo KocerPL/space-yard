@@ -71,7 +71,7 @@ offset_left = 56.0
 offset_top = 240.0
 offset_right = 240.0
 offset_bottom = 297.0
-text = "Options"
+text = " Options"
 icon = ExtResource("7_uui5l")
 
 [node name="GithubButton" parent="." unique_id=1117403786 instance=ExtResource("2_natt5")]
@@ -80,7 +80,7 @@ offset_left = 59.0
 offset_top = 480.0
 offset_right = 224.0
 offset_bottom = 531.0
-text = "Github"
+text = " Github"
 icon = ExtResource("5_dfy5j")
 
 [node name="ExitButton" parent="." unique_id=1835697270 instance=ExtResource("2_natt5")]
