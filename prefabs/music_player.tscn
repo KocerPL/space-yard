@@ -31,7 +31,8 @@ func stop():
 
 func start():
 	main_track_player.play()
-
+func is_playing() -> bool:
+	return main_track_player.playing
 
 func play_tense_track():
 	#set_target_volume(-100)

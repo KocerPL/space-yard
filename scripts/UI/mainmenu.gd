@@ -15,6 +15,8 @@ func _ready() -> void:
 	tw.finished.connect(func() -> void:
 		_fade.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	)
+	if !MusicPlayer.is_playing():
+		MusicPlayer.start();
 
 
 func _on_team_memers_button_pressed() -> void:
