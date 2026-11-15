@@ -3,6 +3,9 @@
 [ext_resource type="FontFile" uid="uid://mdbuffarwjlg" path="res://assets/fonts/lmmono8-regular.otf" id="1_idoxa"]
 [ext_resource type="Script" uid="uid://bgbarfe7ufqic" path="res://scripts/UI/telemetry.gd" id="1_sw7ux"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7glrs"]
+bg_color = Color(0.15, 0.15, 0.15, 0.77254903)
+
 [sub_resource type="LabelSettings" id="LabelSettings_f6xyr"]
 font = ExtResource("1_idoxa")
 font_color = Color(0.42050004, 1, 0.39, 1)
@@ -21,6 +24,7 @@ layout_mode = 0
 offset_right = 172.0
 offset_bottom = 167.0
 mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_7glrs")
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=645557947]
 layout_mode = 2
