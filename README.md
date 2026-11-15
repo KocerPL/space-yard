@@ -27,6 +27,7 @@ You drive Opportunity across Meridiani Planum, guided by voiced transmissions fr
 | W / S | Drive forward / backward |
 | A / D | Turn left / right |
 | Left mouse + drag | Orbit the camera |
+| Mouse wheel | Zoom the camera in / out |
 | E | Analyze a sample (at a target, when prompted) |
 | Esc | Pause menu |
 
