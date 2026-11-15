@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://d00f7m0ka7nxn" path="res://scenes/stars_background.tscn" id="1_506s5"]
 [ext_resource type="PackedScene" uid="uid://c5vwudqbni41t" path="res://scenes/options_menu.tscn" id="1_08038"]
-[ext_resource type="Script" uid="uid://b7bq7ichuc1wt" path="res://scenes/UI/options_independent.gd" id="1_t3yhk"]
+[ext_resource type="Script" uid="uid://b7bq7ichuc1wt" path="res://scripts/UI/options_independent.gd" id="1_t3yhk"]
 
 [node name="OptionsIndependent" type="Control" unique_id=1528188095]
 layout_mode = 3
