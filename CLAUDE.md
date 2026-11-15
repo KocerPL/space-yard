@@ -15,7 +15,7 @@ Godot 4.7 (Forward+, Jolt Physics), GDScript only, no C#. It's a Mars rover sand
 - `Audio` (`scripts/audio_controller.gd`) is an autoload. Transmissions go through `play_voice()`, which has one channel, so a new transmission cuts off the old one.
 - Voice clips are `assets/audio/sy.*.wav`, imported with `edit/normalize=true` because the recordings are very quiet (peaks around -20 dB). The intro is `Prologue_1` then `Prologue_2`, played back to back from an `AudioStreamPlaylist` (`fade_time = 0`) in the sandbox. `Trans_N` is `Transmission 0N` and `Idle_N` is `Idle 0N`. New clips need normalize turned on in their `.import` file. The exceptions are the ElevenLabs MP3s `sy.Mission_completed.mp3` and `sy.Doom.mp3` (`Doom on the horizon`), which are already loud and have no normalize option. `Battery low` and `Only silence` have no voice, so they stay up for `chars / read_speed`.
 - The sequence ends with `Transmission 05` → `Mission completed` → `Transmission 06` (starts the storm) → `Battery low` → `Doom on the horizon` → `Only silence`. Then `Mission.end_scene` (`mainmenu.tscn`) loads after `end_delay`.
-- `CameraRig` zooms in from `intro_distance` to the spring arm's length on start.
+- `CameraRig` zooms in from `intro_distance` to the spring arm's length on start. After that the mouse wheel zooms by changing `spring_length` within `zoom_limits`, eased by `zoom_smoothing`. Using the wheel during the intro cuts it short.
 - The sandbox HUD has a compass bar (`scripts/UI/compass.gd`) that follows the camera's heading. North is -Z and east is +X.
 - HUD controls need `mouse_filter = 2` (IGNORE). A `Control` defaults to STOP and swallows the clicks `CameraRig` reads in `_unhandled_input`. Headless probes don't show this, because there's no GUI picking without a window.
 - Headless, `MultiMesh.get_instance_transform()` reads back zero (the renderer is a dummy). Tests check rocks through their colliders.
@@ -23,13 +23,9 @@ Godot 4.7 (Forward+, Jolt Physics), GDScript only, no C#. It's a Mars rover sand
 - A new `class_name` is unknown to `-s` scripts until the class cache is refreshed: `timeout -s KILL 120 godot --headless --import < /dev/null`.
 - `scenes/mainmenu.tscn` is the title menu (Play, authors, links, exit). In the sandbox, ESC opens `scenes/UI/game_menu.tscn` (resume, options, main menu, quit).
 - `Sandstorm` (`scripts/Events/sandstorm.gd`) starts when the mission plays `Transmission 06`: fog, darkness and dust ramp up over `ramp_up`, and the rover is locked (`is_stopped`) while `intensity >= lock_at`. With `clears = false` (the default, since the mission ends in the storm) it stays at `peak`. With `true` it holds and then fades. Its `Mission` is optional, since `test_mission` replaces it.
-<<<<<<< HEAD
-- `analyze_area.gd` (press E to analyze a nearby body in group `Analyzis`) is only wired up in `scenes/analysis-test.tscn`, not on the sandbox rover.
+- `analyze_area.gd` (press E to analyze a nearby body in group `Analyzis`) is an older prototype, only wired up in `scenes/analysis-test.tscn`. The sandbox uses Mission's `analyze` instead: the prototype looks for bodies, but POIs are `Area3D`s and boulders are part of a chunk's body.
 - The arm is the rover's `Arm` node (`scripts/rover_arm.gd`). The model has no arm joints: the whole arm is the `tex_arm` surface of `Model/Body`. On ready, `RoverArm` cuts it by connected parts into the mount (stays on the body), the upper arm and the turret, and adds a forearm cylinder that the folded model doesn't show. The joint positions (`SHOULDER`, `ELBOW`, `WRIST`, `TIP`) were measured on the GLB, so re-measure them if the model is re-exported. `reach(point)` unfolds it with two-bone IK, elbow up, and never towards the back. `stow()` folds it. Pressing E (raw key, like the drive keys) reaches for the ground 1 m ahead, holds for `hold_time` and folds back.
 - Packed arrays (`PackedVector3Array` etc.) are shared by reference. `duplicate()` one before changing it if it came out of `surface_get_arrays()` and gets reused.
-=======
-- `analyze_area.gd` (press E to analyze a nearby body in group `Analyzis`) is an older prototype, only wired up in `scenes/analysis-test.tscn`. The sandbox uses Mission's `analyze` instead: the prototype looks for bodies, but POIs are `Area3D`s and boulders are part of a chunk's body.
->>>>>>> 15c3b6951c2ce5498d352f5d27030d90b449a5a6
 
 ## Commands
 
