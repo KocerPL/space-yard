@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://ddkxtafn8hxux"]
 
 [ext_resource type="AudioStream" uid="uid://bi1ilmaqumvxw" path="res://assets/audio/mars_music.wav" id="1_37jcm"]
-[ext_resource type="AudioStream" uid="uid://x4o01csukct4" path="res://assets/audio/mars_tensse_long.wav" id="2_6gwap"]
+[ext_resource type="AudioStream" uid="uid://dg4i3he6hbady" path="res://assets/audio/mars_tense_ending.wav" id="2_6gwap"]
 
 [sub_resource type="GDScript" id="GDScript_3owqy"]
 script/source = "extends Node
