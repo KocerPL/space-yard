@@ -193,9 +193,9 @@ draw_pass_1 = SubResource("QuadMesh_x35my")
 script = ExtResource("8_mission")
 rover = NodePath("../Rover")
 dialog = NodePath("../HUD/DialogBox")
-end_scene = "res://scenes/mainmenu.tscn"
 prompt = NodePath("../HUD/Telemetry/PanelContainer/MarginContainer/VBoxContainer/InteractionsLabels/CollectSampleLabel")
 analyzing = NodePath("../HUD/Telemetry/PanelContainer/MarginContainer/VBoxContainer/InteractionsLabels/AnalyzingLabel")
+end_scene = "res://scenes/mainmenu.tscn"
 end_fade = NodePath("../HUD/FadeOut")
 
 [node name="Intro" type="Node" parent="Mission" unique_id=704131812]
@@ -303,7 +303,7 @@ voice = ExtResource("a_idle_3")
 idle = true
 
 [connection signal="resumePressed" from="HUD/GameMenu" to="HUD" method="_on_game_menu_resume_pressed"]
-[connection signal="reading_message" from="Mission" to="HUD/Telemetry" method="_on_mission_reading_message"]
 [connection signal="event_started" from="Mission" to="HUD/Telemetry" method="_on_mission_event_started"]
+[connection signal="reading_message" from="Mission" to="HUD/Telemetry" method="_on_mission_reading_message"]
 
 [editable path="HUD/Telemetry"]
