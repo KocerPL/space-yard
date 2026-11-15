@@ -24,11 +24,10 @@ grow_vertical = 2
 script = ExtResource("2_7imkv")
 scroll_speed = 80.0
 loop_crawl = true
-credits_text = "Autorzy:
-Eryk Kopciuch - Lider
+credits_text = "Authors:
+Eryk Kopciuch - Leader
 Dawid Szczędor
 Patryk Przybyło
 Zuzanna Makowiecka
 Sylwester Półtorak
-Kacper Saletnik
-"
+Kacper Saletnik"
